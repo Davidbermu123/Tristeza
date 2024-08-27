@@ -20,8 +20,53 @@ function changeStatus(element) {
     // Guarda el estado actual en localStorage para que se sincronice con los íconos
     localStorage.setItem('currentStatus', statuses[nextIndex]);
 
+    // Añade una nueva notificación
+    addNotification(statuses[nextIndex]);
+
     // Redirecciona a la página de los íconos para actualizar la vista
     window.location.href = 'rastreoventaCliente.html';
+}
+
+function addNotification(status) {
+    // Obtener la fecha y hora actual
+    const now = new Date();
+    const dateTime = now.toLocaleDateString() + ' ' + now.toLocaleTimeString();
+
+    // Crear el mensaje de notificación
+    const statusMessages = {
+        "Aceptado por la compañía": "El estado ha sido actualizado a 'Aceptado por la compañía'.",
+        "Alistando": "El estado ha sido actualizado a 'Alistando'.",
+        "En camino": "El estado ha sido actualizado a 'En camino'.",
+        "Entregado": "El estado ha sido actualizado a 'Entregado'."
+    };
+    const notificationMessage = statusMessages[status];
+
+    // Crear una nueva entrada de notificación
+    const newNotification = {
+        dateTime: dateTime,
+        message: notificationMessage
+    };
+
+    // Guardar las notificaciones en localStorage
+    const notifications = JSON.parse(localStorage.getItem('notifications')) || [];
+    notifications.push(newNotification);
+    localStorage.setItem('notifications', JSON.stringify(notifications));
+
+    // Actualiza el log de notificaciones en la interfaz
+    updateLog();
+}
+
+function updateLog() {
+    const logContainer = document.getElementById('update-log');
+    logContainer.innerHTML = ''; // Limpiar el contenedor de log antes de agregar las nuevas entradas
+
+    // Cargar las notificaciones almacenadas
+    const notifications = JSON.parse(localStorage.getItem('notifications')) || [];
+    notifications.forEach(notification => {
+        const logEntry = document.createElement('p');
+        logEntry.textContent = `${notification.dateTime}: ${notification.message}`;
+        logContainer.appendChild(logEntry);
+    });
 }
 
 window.onload = function() {
@@ -60,4 +105,7 @@ window.onload = function() {
             connectors.forEach(connector => connector.classList.add('active'));
         }
     }
+
+    // Actualiza el log de notificaciones
+    updateLog();
 };

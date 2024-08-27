@@ -77,3 +77,30 @@
     border-color: #4caf50; /* Borde verde cuando está activo */
 }
 
+.update-log {
+    margin-top: 20px;
+    padding: 10px;
+    background-color: #f9f9f9;
+    border: 1px solid #ddd;
+}
+
+.update-log p {
+    margin: 5px 0;
+    font-size: 14px;
+}
+.notification-log {
+    margin-top: 20px;
+}
+
+.notification-entry {
+    background-color: #f4f4f4;
+    border: 1px solid #ddd;
+    border-radius: 4px;
+    padding: 10px;
+    margin-bottom: 5px;
+}
+
+.notification-entry p {
+    margin: 0;
+    font-size: 14px;
+}
