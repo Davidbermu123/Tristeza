@@ -1,96 +1,79 @@
-body {
-    font-family: 'Poppins', sans-serif;
-    background-color: #f4f4f4;
-}
-
+/* Estilos de los pasos */
 .tracking-container {
-    background-color: white;
-    border-radius: 10px;
-    padding: 20px;
-    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
-    margin-top: 50px;
-}
-
-.tracking-header {
     text-align: center;
-    margin-bottom: 30px;
+    margin: 20px auto;
+    max-width: 600px;
 }
 
 .tracking-steps {
     display: flex;
-    justify-content: space-around;
-    margin-bottom: 20px;
-}
-
-.tracking-steps .step {
-    text-align: center;
-    font-weight: 500;
-    color: #333;
-}
-
-.tracking-steps .step img {
-    width: 50px;
-    height: 50px;
-    margin-bottom: 10px;
-    transition: transform 0.3s ease;
-}
-
-.tracking-steps .step.highlight img {
-    transform: scale(1.2);
-    filter: brightness(1.5);
-}
-
-.tracking-table {
-    width: 100%;
-    border-collapse: collapse;
-    margin-top: 20px;
-}
-
-.tracking-table th, .tracking-table td {
-    padding: 12px;
-    text-align: left;
-    border-bottom: 1px solid #ddd;
-}
-
-.tracking-table th {
-    background-color: #4CAF50;
-    color: white;
-}
-
-.status {
-    cursor: pointer;
-}
-
-.status-alistando {
-    color: #4CAF50;
-    font-weight: bold;
-}
-
-.status-en-camino {
-    color: #FFA500;
-    font-weight: bold;
-}
-
-.status-listo-envio {
-    color: #FF4500;
-    font-weight: bold;
-}
-
-/* Agregando estilos para los estados destacados */
-#step-alistando.highlight {
-    border: 2px solid #4CAF50;
-    border-radius: 50%;
+    justify-content: space-between;
+    align-items: center;
+    position: relative;
     padding: 10px;
 }
 
-#step-en-camino.highlight {
-    border: 2px solid #FFA500;
-    border-radius: 50%;
-    padding: 10px;
+.step {
+    flex: 1;
+    position: relative;
+    text-align: center; /* Asegura que todo esté centrado */
 }
 
-#step-entregado.highlight {
-    border: 2px solid #FF4500;
+.step .icon-circle {
+    width: 60px;
+    height: 60px;
+    margin: 0 auto;
+    background-color: #e0e0e0;
     border-radius: 50%;
-    padding: 10px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    border: 4px solid transparent; /* Borde transparente por defecto */
 }
+
+.step.active .icon-circle {
+    border-color: #4caf50; /* Borde verde cuando está activo */
+    background-color: #4caf50; /* Fondo verde cuando está activo */
+}
+
+.connector {
+    flex: 1;
+    height: 4px;
+    background-color: #e0e0e0;
+    margin: 0 -4px; /* Ajustar para conectar las líneas correctamente */
+    transition: background-color 0.3s ease-in-out; /* Transición suave */
+}
+
+.connector.active {
+    background-color: #4caf50; /* Verde cuando el paso siguiente está activo */
+}
+
+.step p {
+    margin-top: 10px;
+    font-size: 14px;
+    color: #ffffff;
+}
+
+.step img {
+    transition: filter 0.3s ease-in-out;
+}
+
+.step.highlight img {
+    filter: grayscale(0%); /* Asegura que el icono esté a color */
+}
+
+.step.highlight p {
+    color: green;
+    font-weight: bold;
+}
+
+/* Estilos para el nuevo estado */
+.status-aceptado {
+    color: #4caf50; /* Color verde para el estado aceptado */
+}
+
+.step.active .icon-circle.aceptado {
+    background-color: #4caf50; /* Fondo verde cuando está activo */
+    border-color: #4caf50; /* Borde verde cuando está activo */
+}
+
