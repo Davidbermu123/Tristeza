@@ -1,6 +1,12 @@
 $(document).ready(function () {
     var currentChart = null;
 
+    function mostrarGrafico(graficoId) {
+        $('#grafico-ventas-semanal').hide();
+        $('#grafico-compras-semanal').hide();
+        $(graficoId).show();
+    }
+
     function cargarGraficoVentasSemanal(scatterData) {
         if (currentChart) {
             currentChart.destroy();
@@ -23,22 +29,21 @@ $(document).ready(function () {
             options: {
                 scales: {
                     x: {
-                        type: 'time',
-                        time: {
-                            unit: 'week',
-                            displayFormats: {
-                                week: 'MMM d'
-                            }
+                        type: 'category',
+                        title: {
+                            display: true,
+                            text: 'Semana'
                         }
                     },
                     y: {
                         beginAtZero: true,
+                        max: 50,
                         title: {
                             display: true,
-                            text: 'Ventas'
+                            text: 'Cantidad'
                         },
                         ticks: {
-                            stepSize: 1
+                            stepSize: 5
                         }
                     }
                 }
@@ -68,22 +73,21 @@ $(document).ready(function () {
             options: {
                 scales: {
                     x: {
-                        type: 'time',
-                        time: {
-                            unit: 'week',
-                            displayFormats: {
-                                week: 'MMM d'
-                            }
+                        type: 'category',
+                        title: {
+                            display: true,
+                            text: 'Semana'
                         }
                     },
                     y: {
                         beginAtZero: true,
+                        max: 50,
                         title: {
                             display: true,
-                            text: 'Compras'
+                            text: 'Cantidad'
                         },
                         ticks: {
-                            stepSize: 1
+                            stepSize: 5
                         }
                     }
                 }
@@ -93,39 +97,47 @@ $(document).ready(function () {
 
     function cargarVentasSemanal() {
         $.ajax({
-            url: '/graficos/ventas-semanal?inicio=1&fin=100', // Cambiar según sea necesario
+            url: '/graficos/ventas-semanal',
             method: 'GET',
+            data: {
+                inicio: '2024-01-01',  // Reemplaza con el valor adecuado
+                fin: '2024-01-07'      // Reemplaza con el valor adecuado
+            },
             success: function (data) {
                 var scatterData = [];
-                $.each(data, function (date, value) {
-                    scatterData.push({ x: new Date(date), y: value });
+                $.each(data, function (key, value) {
+                    scatterData.push({ x: key, y: value });
                 });
                 cargarGraficoVentasSemanal(scatterData);
+            },
+            error: function (xhr, status, error) {
+                console.error("Error en la solicitud: ", error);
             }
         });
     }
 
     function cargarComprasSemanal() {
         $.ajax({
-            url: '/graficos/compras-semanal?inicio=1&fin=100', // Cambiar según sea necesario
+            url: '/graficos/compras-semanal',
             method: 'GET',
+            data: {
+                inicio: '2024-01-01',  // Reemplaza con el valor adecuado
+                fin: '2024-01-07'      // Reemplaza con el valor adecuado
+            },
             success: function (data) {
                 var scatterData = [];
-                $.each(data, function (date, value) {
-                    scatterData.push({ x: new Date(date), y: value });
+                $.each(data, function (key, value) {
+                    scatterData.push({ x: key, y: value });
                 });
                 cargarGraficoComprasSemanal(scatterData);
+            },
+            error: function (xhr, status, error) {
+                console.error("Error en la solicitud: ", error);
             }
         });
     }
 
-    function mostrarGrafico(graficoId) {
-        $('#grafico-ventas-semanal').hide();
-        $('#grafico-compras-semanal').hide();
-        $(graficoId).show();
-    }
-
-    cargarVentasSemanal();  // Carga inicial
+    cargarVentasSemanal();  // Carga inicial de ventas
     $('#btn-ventas').click(cargarVentasSemanal);
     $('#btn-compras').click(cargarComprasSemanal);
 });
