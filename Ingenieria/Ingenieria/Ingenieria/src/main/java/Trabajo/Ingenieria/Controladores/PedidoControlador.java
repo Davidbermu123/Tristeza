@@ -10,7 +10,7 @@ import Trabajo.Ingenieria.Entidades.Pedido;
 import Trabajo.Ingenieria.Servicios.PedidoService;
 
 @RestController
-@RequestMapping("/pedido")
+@RequestMapping("/pedidos")
 public class PedidoControlador {
 
     @Autowired
