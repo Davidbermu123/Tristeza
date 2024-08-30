@@ -11,7 +11,7 @@ public class fichasStockEntidad {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long idItem;
 
-    private String colorItem;
+    private String nombreItem;
     private String imagenItem;
     private Integer stockItem;
     private Float precioItem;
@@ -22,11 +22,11 @@ public class fichasStockEntidad {
     public void setIdItem(Long idItem) {
         this.idItem = idItem;
     }
-    public String getColorItem(){
-        return colorItem;
+    public String getNombreItem(){
+        return nombreItem;
     }
-    public void setColorItem(String colorItem){
-        this.colorItem = colorItem;
+    public void setNombreItem(String nombreItem){
+        this.nombreItem = nombreItem;
     }
     public String getImagenItem() {
         return imagenItem;
