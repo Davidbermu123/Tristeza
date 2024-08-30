@@ -1,69 +1,20 @@
-function saveUsuario() {
-    let name = $("#usuarioname").val();
-    let lastname = $("#usuarioapellido").val();
-    let alias = $("#usuarioalias").val();
-    let dir = $("#usuariodireccion").val();
-    let cel = $("#usuariotelefono").val();
-    let barrio = $("#usuariociudad").val();
-    let contrasena = $("#usuariocontrasena").val();
-
-    if (name === '' || lastname === '' || alias === '' || dir === '' || cel === '' || barrio === '' || contrasena === '') {
-        alert('Por favor, complete todos los campos.');
-        return; // Detener la ejecución si algún campo está vacío
-    }
-
-    // Validación de la seguridad de la contraseña
-    if (!isPasswordSecure(contrasena)) {
-        alert('La contraseña no cumple con los criterios de seguridad: Debe tener al menos 8 caracteres, incluir una letra mayúscula, un número y un carácter especial.');
-        return; // Detener la ejecución si la contraseña no es segura
-    }
-
-    let data = {
-        nombre: name,
-        apellido: lastname,
-        username: alias,
-        direccion: dir,
-        telefono: cel,
-        ciudad: barrio,
-        password: contrasena
-    }
-
-    localStorage.clear();
-    $.ajax({
-        url: '/auth/register',
-        type: 'POST',
-        contentType: 'application/json',
-        data: JSON.stringify(data),
-        success: function(response) {
-            localStorage.setItem('token', response.token);
-            window.location.href = "/Vistas/inicioVista.html";
-        },
-        error: function(xhr, status, error) {
-            alert('Este usuario ya existe, por favor escoger otro');
-            window.location.href = "/Vistas/registroVista.html";
-        }
-    });
-}
-
-function isPasswordSecure(password) {
-    const minLength = 8;
-    const hasUpperCase = /[A-Z]/.test(password);
-    const hasNumber = /\d/.test(password);
-    const hasSpecialChar = /[!@#$%^&*(),.?":{}|<>]/.test(password);
-    return password.length >= minLength && hasUpperCase && hasNumber && hasSpecialChar;
-}
-
-function regresar() {
-    window.location.href = "../index.html";
-}
-// Mostrar/Ocultar contraseña
+// Función para alternar la visibilidad de la contraseña
 function togglePasswordVisibility() {
-    const passwordInput = document.getElementById("usuariocontrasena");
-    const type = passwordInput.type === "password" ? "text" : "password";
-    passwordInput.type = type;
+    const passwordField = document.getElementById('usuariocontrasena');
+    const eyeIcon = document.getElementById('eyeIcon');
+
+    if (passwordField.type === 'password') {
+        passwordField.type = 'text';
+        eyeIcon.classList.remove('fa-eye');
+        eyeIcon.classList.add('fa-eye-slash');
+    } else {
+        passwordField.type = 'password';
+        eyeIcon.classList.remove('fa-eye-slash');
+        eyeIcon.classList.add('fa-eye');
+    }
 }
 
-// Generar contraseña segura automáticamente
+// Función para generar una contraseña segura automáticamente
 function generatePassword() {
     const length = 8; // Longitud mínima de la contraseña
     const lowercase = "abcdefghijklmnopqrstuvwxyz";
@@ -91,4 +42,55 @@ function generatePassword() {
     document.getElementById("usuariocontrasena").value = password;
 }
 
+// Asigna los eventos cuando el DOM esté listo
+$(document).ready(function() {
+    $('#togglePassword').click(togglePasswordVisibility);
+    $('#generatePasswordBtn').click(generatePassword);
+});
 
+// Función para guardar el usuario
+function saveUsuario() {
+    let name = $("#usuarioname").val();
+    let lastname = $("#usuarioapellido").val();
+    let alias = $("#usuarioalias").val();
+    let dir = $("#usuariodireccion").val();
+    let cel = $("#usuariotelefono").val();
+    let barrio = $("#usuariociudad").val();
+    let contrasena = $("#usuariocontrasena").val();
+
+    if (name === '' || lastname === '' || alias === '' || dir === '' || cel === '' || barrio === '' || contrasena === '') {
+        alert('Por favor, complete todos los campos.');
+        return; // Detener la ejecución si algún campo está vacío
+    }
+
+    let data = {
+        nombre: name,
+        apellido: lastname,
+        username: alias,
+        direccion: dir,
+        telefono: cel,
+        ciudad: barrio,
+        password: contrasena,
+    };
+
+    localStorage.clear();
+    $.ajax({
+        url: '/auth/register',
+        type: 'POST',
+        contentType: 'application/json',
+        data: JSON.stringify(data),
+        success: function(response) {
+            localStorage.setItem('token', response.token);
+            window.location.href = "/Vistas/inicioVista.html";
+        },
+        error: function(xhr, status, error) {
+            alert('Error en la solicitud: ' + xhr.responseText);
+            window.location.href = "/Vistas/registroVista.html";
+        }
+    });
+}
+
+// Función para regresar a la página principal
+function regresar() {
+    window.location.href = "../index.html";
+}

@@ -1,0 +1,62 @@
+/* Contenedor del formulario */
+.container {
+    margin-top: 50px;
+}
+
+/* Estilos de los campos de entrada */
+input[type="text"], input[type="password"] {
+    width: 100%;
+    padding: 12px;
+    margin-bottom: 10px;
+    border: 1px solid #555;
+    border-radius: 4px;
+}
+
+/* Estilo específico para el campo de contraseña */
+input[type="password"] {
+    background-color: #fff; /* Fondo blanco para la contraseña */
+    color: #000; /* Texto en negro para contrastar con el fondo blanco */
+}
+
+/* Contenedor de la contraseña y botones */
+.password-container {
+    position: relative;
+    width: 100%;
+}
+
+.password-container input {
+    width: 100%;
+    padding-right: 60px; /* Espacio suficiente para ambos botones */
+}
+
+/* Estilos para los botones */
+.password-container button {
+    position: absolute;
+    top: 50%;
+    transform: translateY(-50%);
+    background: none;
+    border: none;
+    outline: none;
+    cursor: pointer;
+    padding: 0;
+    color: #999;
+    font-size: 16px;
+}
+
+.password-container #togglePassword {
+    right: 40px; /* Espacio para el botón de generar contraseña */
+}
+
+.password-container #generatePasswordBtn {
+    right: 10px; /* Espacio desde el borde derecho */
+}
+
+/* Estilos para los íconos */
+.password-container button i {
+    color: #333; /* Color de los íconos */
+}
+
+/* Color del ícono en hover */
+.password-container button:hover i {
+    color: #555; /* Color más oscuro cuando se pasa el cursor sobre el ícono */
+}
