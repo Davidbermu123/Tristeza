@@ -6,10 +6,13 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
+
+import Trabajo.Ingenieria.Entidades.role;
 import Trabajo.Ingenieria.Entidades.usuario;
 import Trabajo.Ingenieria.Servicios.clienteServicio;
 
@@ -46,5 +49,21 @@ private clienteServicio usuarioService;
         } else {
             return "Usuario no encontrado";
         }
+    }
+
+    @GetMapping("/findbyrol")
+    public List<usuario> obtenerRol(@RequestParam role rol){
+        return usuarioService.obtenerRol(rol);
+    }
+
+    @PutMapping("/updateUsuario")
+    public void actualizarUsuarioPorUsername(@RequestParam String username,
+                                            @RequestParam String nombre,
+                                            @RequestParam String apellido,
+                                            @RequestParam String ciudad,
+                                            @RequestParam String direccion,
+                                            @RequestParam role rol,
+                                            @RequestParam String telefono) {
+        usuarioService.actualizarUsuarioPorUsername(username, nombre, apellido, ciudad, direccion, rol, telefono);
     }
 }
