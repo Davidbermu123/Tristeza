@@ -12,7 +12,7 @@ public class Pedido {
     @GeneratedValue(strategy= GenerationType.IDENTITY)
     private Long idPedido;
     
-    private Long idUsuario;
+    private String username;
     private String nombreProducto;
     private Integer cantidadPedido;
     private String estado;
@@ -24,11 +24,11 @@ public class Pedido {
     public void setIdPedido(Long idPedido) {
         this.idPedido = idPedido;
     }
-    public Long getIdUsuario() {
-        return idUsuario;
+    public String getUsername() {
+        return username;
     }
-    public void setIdUsuario(Long idUsuario) {
-        this.idUsuario = idUsuario;
+    public void setUsername(String username) {
+        this.username = username;
     }
     public String getNombreProducto() {
         return nombreProducto;

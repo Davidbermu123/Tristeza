@@ -1,3 +1,12 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+    <title>Product Form</title>
+    <link href="https://ajax.googleapis.com/ajax/libs/jquery/3.7.1/jquery.min.js" rel="stylesheet">
+    <link href="/vendor/bootstrap/css/bootstrap.min.css" rel="stylesheet">
+    <style>
         /* Estilos generales */
         .flex { display: flex; }
         .flex-1 { flex: 1; }
@@ -13,6 +22,12 @@
         .mb-4 { margin-bottom: 1rem; }
         .mr-4 { margin-right: 1rem; }
         
+        /* Nuevos estilos para el formulario */
+        .page-content > div {
+            background-color: #333; /* Fondo gris oscuro */
+            color: #fff; /* Texto blanco */
+            position: relative;
+        }
         
         .page-content .delete-button {
             background-color: #F505A5; /* Color de fondo de la x */
@@ -56,13 +71,21 @@
         .text-white { color: #fff; }
         .hover\:bg-blue-600:hover { background-color: #e3a0c6; } /* Hover para el botón azul */
         .hover\:bg-green-600:hover { background-color: #e3a0c6; } /* Hover para el botón verde */
-
-        /* Estilo para el texto de stock disponible */
-        .stock-text {
-        color: #F505A5; /* Texto blanco */
-        }
-        .main-banner {
-            text-align: center; /* Centra el texto horizontalmente */
-        }
-
-  
+    </style>
+    
+</head>
+<body>
+    <div class="container">
+        <div class="row">
+            <div class="col-lg-12">
+                <div class="page-content">
+                    <!-- Product Forms will be inserted here -->
+                </div>
+            </div>
+        </div>
+    </div>
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.7.1/jquery.min.js"></script>
+    <script src="/vendor/bootstrap/js/bootstrap.min.js"></script>
+    <script src="/Js/productForm2.js"></script>
+</body>
+</html>
