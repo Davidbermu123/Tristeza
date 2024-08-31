@@ -1,0 +1,96 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@100;200;300;400;500;600;700;800;900&display=swap" rel="stylesheet">
+    <title>Registro de Usuario</title>
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.7.1/jquery.min.js"></script>
+    <!-- FontAwesome for icons -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
+    <!-- Bootstrap core CSS -->
+    <link href="../vendor/bootstrap/css/bootstrap.min.css" rel="stylesheet">
+    <!-- Additional CSS Files -->
+    <link rel="stylesheet" href="../assets/css/fontawesome.css">
+    <link rel="stylesheet" href="../assets/css/templatemo-cyborg-gaming.css">
+    <link rel="stylesheet" href="../assets/css/owl.css">
+    <link rel="stylesheet" href="../assets/css/animate.css">
+    <link rel="stylesheet" href="https://unpkg.com/swiper@7/swiper-bundle.min.css"/>
+    <!-- Custom CSS -->
+    <link rel="stylesheet" href="../Css/registroCss.css">
+</head>
+
+<body>
+    <header class="header-area header-sticky">
+        <div class="container">
+            <div class="row">
+                <div class="col-12">
+                    <nav class="main-nav">
+                        <a href="index.html" class="logo">
+                            <img src="../assets/images/logo.png" alt="">
+                        </a>
+                        <ul class="nav">
+                            <li><a href="/Vistas/inicioVista.html">Inicio de Sesión</a></li>
+                        </ul>
+                        <a class="menu-trigger">
+                            <span>Menu</span>
+                        </a>
+                    </nav>
+                </div>
+            </div>
+        </div>
+    </header>
+
+    <div class="container">
+        <div class="row">
+            <div class="col-lg-12">
+                <div class="page-content">
+                    <h2>Registro de Usuario</h2>
+                    <div>
+                        <input id="usuarioname" class="form-control" placeholder="Nombre">
+                        <input id="usuarioapellido" class="form-control" placeholder="Apellido">
+                        <input id="usuarioalias" class="form-control" placeholder="Alias">
+                        <input id="usuariodireccion" class="form-control" placeholder="Direccion">
+                        <input id="usuariotelefono" class="form-control" placeholder="Telefono">
+                        <input id="usuariociudad" class="form-control" placeholder="Ciudad">
+                        <!-- Contenedor de la contraseña -->
+                        <div class="password-container">
+                            <input id="usuariocontrasena" type="password" class="form-control" placeholder="Contraseña">
+                            <button type="button" id="togglePassword" title="Mostrar/Ocultar contraseña">
+                                <i class="fas fa-eye" id="eyeIcon"></i>
+                            </button>
+                            <button type="button" id="generatePasswordBtn" title="Generar contraseña segura">
+                                <i class="fas fa-key"></i>
+                            </button>
+                        </div>
+                        <button class="btn btn-primary" onclick="saveUsuario()">Continuar registro</button>
+                        <button class="btn btn-secondary" onclick="regresar()">Salir</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <footer>
+        <div class="container">
+            <div class="row">
+                <div class="col-lg-12">
+                    <p>Copyright © 2024 <a href="#">Modelo de inventario</a> Company. All rights reserved.</p>
+                </div>
+            </div>
+        </div>
+    </footer>
+
+    <!-- Scripts -->
+    <script src="../vendor/jquery/jquery.min.js"></script>
+    <script src="../vendor/bootstrap/js/bootstrap.min.js"></script>
+    <script src="../assets/js/isotope.min.js"></script>
+    <script src="../assets/js/owl-carousel.js"></script>
+    <script src="../assets/js/tabs.js"></script>
+    <script src="../assets/js/popup.js"></script>
+    <script src="../assets/js/custom.js"></script>
+    <script type="text/JavaScript" src="../Js/registroJs.js"></script>
+</body>
+
+</html>
