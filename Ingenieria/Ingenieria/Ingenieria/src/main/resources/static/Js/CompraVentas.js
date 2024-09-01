@@ -7,9 +7,9 @@ $(document).ready(function () {
         $(graficoId).show();
     }
 
-    function cargarGraficoVentasSemanal(scatterData) {
-        if (currentChart) {
-            currentChart.destroy();
+    function cargarGraficoVentasSemanal(data) {
+        if (window.myChart instanceof Chart) {
+            window.myChart.destroy();
         }
         mostrarGrafico('#grafico-ventas-semanal');
         var ctx = document.getElementById('grafico-ventas-semanal').getContext('2d');
@@ -18,32 +18,45 @@ $(document).ready(function () {
             data: {
                 datasets: [{
                     label: 'Ventas Semanales',
-                    data: scatterData,
-                    pointRadius: 5,
+                    data: data.map(item => ({
+                        x: new Date(item.fecha),
+                        y: item.cantidad
+                    })),
                     backgroundColor: 'rgba(255, 99, 132, 0.5)',
                     borderColor: 'rgba(255, 99, 132, 1)',
-                    borderWidth: 1,
-                    showLine: false
+                    pointRadius: 5,
+                    pointHoverRadius: 7
                 }]
             },
             options: {
                 scales: {
                     x: {
-                        type: 'category',
+                        type: 'time',
+                        time: {
+                            unit: 'day',
+                            displayFormats: {
+                                day: 'yyyy-MM-dd'
+                            }
+                        },
                         title: {
                             display: true,
-                            text: 'Semana'
+                            text: 'Fecha'
                         }
                     },
                     y: {
                         beginAtZero: true,
-                        max: 50,
                         title: {
                             display: true,
                             text: 'Cantidad'
-                        },
-                        ticks: {
-                            stepSize: 5
+                        }
+                    }
+                },
+                plugins: {
+                    tooltip: {
+                        callbacks: {
+                            label: function(context) {
+                                return `Fecha: ${context.raw.x.toISOString().split('T')[0]}, Ventas: ${context.raw.y}`;
+                            }
                         }
                     }
                 }
@@ -51,9 +64,9 @@ $(document).ready(function () {
         });
     }
 
-    function cargarGraficoComprasSemanal(scatterData) {
-        if (currentChart) {
-            currentChart.destroy();
+    function cargarGraficoComprasSemanal(data) {
+        if (window.myChart instanceof Chart) {
+            window.myChart.destroy();
         }
         mostrarGrafico('#grafico-compras-semanal');
         var ctx = document.getElementById('grafico-compras-semanal').getContext('2d');
@@ -62,32 +75,45 @@ $(document).ready(function () {
             data: {
                 datasets: [{
                     label: 'Compras Semanales',
-                    data: scatterData,
-                    pointRadius: 5,
+                    data: data.map(item => ({
+                        x: new Date(item.fecha),
+                        y: item.cantidad
+                    })),
                     backgroundColor: 'rgba(75, 192, 192, 0.5)',
                     borderColor: 'rgba(75, 192, 192, 1)',
-                    borderWidth: 1,
-                    showLine: false
+                    pointRadius: 5,
+                    pointHoverRadius: 7
                 }]
             },
             options: {
                 scales: {
                     x: {
-                        type: 'category',
+                        type: 'time',
+                        time: {
+                            unit: 'day',
+                            displayFormats: {
+                                day: 'yyyy-MM-dd'
+                            }
+                        },
                         title: {
                             display: true,
-                            text: 'Semana'
+                            text: 'Fecha'
                         }
                     },
                     y: {
                         beginAtZero: true,
-                        max: 50,
                         title: {
                             display: true,
                             text: 'Cantidad'
-                        },
-                        ticks: {
-                            stepSize: 5
+                        }
+                    }
+                },
+                plugins: {
+                    tooltip: {
+                        callbacks: {
+                            label: function(context) {
+                                return `Fecha: ${context.raw.x.toISOString().split('T')[0]}, Compras: ${context.raw.y}`;
+                            }
                         }
                     }
                 }
@@ -96,19 +122,19 @@ $(document).ready(function () {
     }
 
     function cargarVentasSemanal() {
+        var hoy = new Date();
+        var inicioSemana = new Date(hoy.setDate(hoy.getDate() - hoy.getDay()));
+        var finSemana = new Date(hoy.setDate(hoy.getDate() - hoy.getDay() + 6));
+        
         $.ajax({
             url: '/graficos/ventas-semanal',
             method: 'GET',
             data: {
-                inicio: '2024-01-01',  // Reemplaza con el valor adecuado
-                fin: '2024-01-07'      // Reemplaza con el valor adecuado
+                inicio: inicioSemana.toISOString().split('T')[0],
+                fin: finSemana.toISOString().split('T')[0]
             },
             success: function (data) {
-                var scatterData = [];
-                $.each(data, function (key, value) {
-                    scatterData.push({ x: key, y: value });
-                });
-                cargarGraficoVentasSemanal(scatterData);
+                cargarGraficoVentasSemanal(data);
             },
             error: function (xhr, status, error) {
                 console.error("Error en la solicitud: ", error);
@@ -117,19 +143,19 @@ $(document).ready(function () {
     }
 
     function cargarComprasSemanal() {
+        var hoy = new Date();
+        var inicioSemana = new Date(hoy.setDate(hoy.getDate() - hoy.getDay()));
+        var finSemana = new Date(hoy.setDate(hoy.getDate() - hoy.getDay() + 6));
+        
         $.ajax({
             url: '/graficos/compras-semanal',
             method: 'GET',
             data: {
-                inicio: '2024-01-01',  // Reemplaza con el valor adecuado
-                fin: '2024-01-07'      // Reemplaza con el valor adecuado
+                inicio: inicioSemana.toISOString().split('T')[0],
+                fin: finSemana.toISOString().split('T')[0]
             },
             success: function (data) {
-                var scatterData = [];
-                $.each(data, function (key, value) {
-                    scatterData.push({ x: key, y: value });
-                });
-                cargarGraficoComprasSemanal(scatterData);
+                cargarGraficoComprasSemanal(data);
             },
             error: function (xhr, status, error) {
                 console.error("Error en la solicitud: ", error);

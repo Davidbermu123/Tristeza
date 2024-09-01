@@ -9,10 +9,10 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
-import java.time.LocalDate;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
+import java.util.ArrayList;
 
 @RestController
 @RequestMapping("/graficos")
@@ -24,31 +24,33 @@ public class AnalisisControlador {
     @Autowired
     private AnalisisComprasService comprasService;
 
-@GetMapping("/ventas-semanal")
-public Map<String, Integer> obtenerVentasDiarias(@RequestParam("inicio") String inicio, @RequestParam("fin") String fin) {
-    List<EntidadAnalisis> ventasDiarias = ventasService.obtenerVentasPorFecha(inicio, fin);
-    Map<String, Integer> ventasPorFecha = new HashMap<>();
+    @GetMapping("/ventas-semanal")
+    public List<Map<String, Object>> obtenerVentasDiarias(@RequestParam("inicio") String inicio, @RequestParam("fin") String fin) {
+        List<EntidadAnalisis> ventasDiarias = ventasService.obtenerVentasPorFecha(inicio, fin);
+        List<Map<String, Object>> ventasPorFecha = new ArrayList<>();
+        
+        for (EntidadAnalisis venta : ventasDiarias) {
+            Map<String, Object> ventaData = new HashMap<>();
+            ventaData.put("fecha", venta.getFechaVenta().toString());
+            ventaData.put("cantidad", venta.getVentas());
+            ventasPorFecha.add(ventaData);
+        }
     
-    for (EntidadAnalisis venta : ventasDiarias) {
-        LocalDate fechaVenta = venta.getFechaVenta().toLocalDate();
-        String key = fechaVenta.toString(); // Fecha sin la hora
-        ventasPorFecha.merge(key, venta.getVentas(), Integer::sum);
+        return ventasPorFecha;
     }
-
-    return ventasPorFecha;
-}
-
-@GetMapping("/compras-semanal")
-public Map<String, Integer> obtenerComprasDiarias(@RequestParam("inicio") String inicio, @RequestParam("fin") String fin) {
-    List<EntidadAnalisis> comprasDiarias = comprasService.obtenerComprasPorFecha(inicio, fin);
-    Map<String, Integer> comprasPorFecha = new HashMap<>();
-
-    for (EntidadAnalisis compra : comprasDiarias) {
-        LocalDate fechaCompra = compra.getFechaCompras().toLocalDate();
-        String key = fechaCompra.toString(); // Fecha sin la hora
-        comprasPorFecha.merge(key, compra.getCompras(), Integer::sum);
+    
+    @GetMapping("/compras-semanal")
+    public List<Map<String, Object>> obtenerComprasDiarias(@RequestParam("inicio") String inicio, @RequestParam("fin") String fin) {
+        List<EntidadAnalisis> comprasDiarias = comprasService.obtenerComprasPorFecha(inicio, fin);
+        List<Map<String, Object>> comprasPorFecha = new ArrayList<>();
+    
+        for (EntidadAnalisis compra : comprasDiarias) {
+            Map<String, Object> compraData = new HashMap<>();
+            compraData.put("fecha", compra.getFechaCompras().toString());
+            compraData.put("cantidad", compra.getCompras());
+            comprasPorFecha.add(compraData);
+        }
+    
+        return comprasPorFecha;
     }
-
-    return comprasPorFecha;
-}
 }
