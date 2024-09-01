@@ -25,7 +25,10 @@ $(document).ready(function () {
                     backgroundColor: 'rgba(255, 99, 132, 0.5)',
                     borderColor: 'rgba(255, 99, 132, 1)',
                     pointRadius: 5,
-                    pointHoverRadius: 7
+                    pointHoverRadius: 7,
+                    showLine: true, // Agrega esta línea para mostrar la línea entre puntos
+                    fill: false, // Opcional: Evita que el área bajo la línea se rellene
+                    tension: 0.1
                 }]
             },
             options: {
@@ -82,7 +85,10 @@ $(document).ready(function () {
                     backgroundColor: 'rgba(75, 192, 192, 0.5)',
                     borderColor: 'rgba(75, 192, 192, 1)',
                     pointRadius: 5,
-                    pointHoverRadius: 7
+                    pointHoverRadius: 7,
+                    showLine: true, // Agrega esta línea para mostrar la línea entre puntos
+                    fill: false, // Opcional: Evita que el área bajo la línea se rellene
+                    tension: 0.1
                 }]
             },
             options: {
