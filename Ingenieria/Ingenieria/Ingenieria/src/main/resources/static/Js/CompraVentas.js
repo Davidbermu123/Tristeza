@@ -7,10 +7,15 @@ $(document).ready(function () {
         $(graficoId).show();
     }
 
-    function cargarGraficoVentasSemanal(data) {
-        if (window.myChart instanceof Chart) {
-            window.myChart.destroy();
+    function destruirGrafico() {
+        if (currentChart instanceof Chart) {
+            currentChart.destroy();
+            currentChart = null; // Limpiar la referencia al gráfico destruido
         }
+    }
+
+    function cargarGraficoVentasSemanal(data) {
+        destruirGrafico(); // Destruir el gráfico existente antes de crear uno nuevo
         mostrarGrafico('#grafico-ventas-semanal');
         var ctx = document.getElementById('grafico-ventas-semanal').getContext('2d');
         currentChart = new Chart(ctx, {
@@ -26,8 +31,8 @@ $(document).ready(function () {
                     borderColor: 'rgba(255, 99, 132, 1)',
                     pointRadius: 5,
                     pointHoverRadius: 7,
-                    showLine: true, // Agrega esta línea para mostrar la línea entre puntos
-                    fill: false, // Opcional: Evita que el área bajo la línea se rellene
+                    showLine: true, // Mostrar la línea entre puntos
+                    fill: false, // Evita que el área bajo la línea se rellene
                     tension: 0.1
                 }]
             },
@@ -68,9 +73,7 @@ $(document).ready(function () {
     }
 
     function cargarGraficoComprasSemanal(data) {
-        if (window.myChart instanceof Chart) {
-            window.myChart.destroy();
-        }
+        destruirGrafico(); // Destruir el gráfico existente antes de crear uno nuevo
         mostrarGrafico('#grafico-compras-semanal');
         var ctx = document.getElementById('grafico-compras-semanal').getContext('2d');
         currentChart = new Chart(ctx, {
@@ -86,8 +89,8 @@ $(document).ready(function () {
                     borderColor: 'rgba(75, 192, 192, 1)',
                     pointRadius: 5,
                     pointHoverRadius: 7,
-                    showLine: true, // Agrega esta línea para mostrar la línea entre puntos
-                    fill: false, // Opcional: Evita que el área bajo la línea se rellene
+                    showLine: true, // Mostrar la línea entre puntos
+                    fill: false, // Evita que el área bajo la línea se rellene
                     tension: 0.1
                 }]
             },
