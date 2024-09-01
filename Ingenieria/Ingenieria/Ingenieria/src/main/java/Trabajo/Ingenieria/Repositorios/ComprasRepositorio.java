@@ -10,7 +10,7 @@ import java.util.List;
 
 @Repository
 public interface ComprasRepositorio extends JpaRepository<EntidadAnalisis, Long> {
-    
-    @Query("SELECT e FROM EntidadAnalisis e WHERE e.Compras IS NOT NULL AND e.idItem BETWEEN ?1 AND ?2")
-    List<EntidadAnalisis> findComprasPorRango(Long inicio, Long fin);
+
+    @Query("SELECT e FROM EntidadAnalisis e WHERE e.Compras IS NOT NULL AND e.fechaCompras BETWEEN ?1 AND ?2")
+    List<EntidadAnalisis> findComprasPorFecha(LocalDate inicio, LocalDate fin);
 }
