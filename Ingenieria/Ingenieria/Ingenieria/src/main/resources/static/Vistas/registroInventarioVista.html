@@ -1,48 +1,186 @@
 <!DOCTYPE html>
-<html lang="es">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Registro de Inventario</title>
-    <link rel="stylesheet" href="../Css/registroInventarioCSS.css">
-    <script src="../vendor/jquery/jquery.min.js"></script>
-</head>
+<html lang="en">
+
+  <head>
+
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@100;200;300;400;500;600;700;800;900&display=swap" rel="stylesheet">
+
+    <title>Registro de inventario</title>
+
+    <!-- Bootstrap core CSS -->
+    <link href="../vendor/bootstrap/css/bootstrap.min.css" rel="stylesheet">
+
+
+    <!-- Additional CSS Files -->
+    <link rel="stylesheet" href="../assets/css/fontawesome.css">
+    <link rel="stylesheet" href="../assets/css/templatemo-cyborg-gaming.css">
+    <link rel="stylesheet" href="../assets/css/owl.css">
+    <link rel="stylesheet" href="../assets/css/animate.css">
+    <link rel="stylesheet"href="https://unpkg.com/swiper@7/swiper-bundle.min.css"/>
+<!--
+
+TemplateMo 579 Cyborg Gaming
+
+https://templatemo.com/tm-579-cyborg-gaming
+
+-->
+  </head>
+
 <body>
-    <div class="container">
-        <h1>Registro de Inventario</h1>
-        <form id="registroForm">
-            <label for="nombre">Nombre del Registro:</label>
-            <input type="text" id="nombre" name="nombre" required>
 
-            <label for="tipo">Tipo de Registro:</label>
-            <select id="tipo" name="tipo" required>
-                <option value="COMPRA">Compra</option>
-                <option value="VENTA">Venta</option>
-            </select>
-
-            <label for="productos">Productos y Cantidades (JSON):</label>
-            <textarea id="productos" name="productos" rows="5" required placeholder='{"1": 10, "2": 5}'></textarea>
-
-            <button type="submit">Registrar</button>
-        </form>
-
-        <div id="response"></div>
-
-        <h2>Registros de Inventario</h2>
-        <table id="registrosTable">
-            <thead>
-                <tr>
-                    <th>ID</th>
-                    <th>Nombre</th>
-                    <th>Tipo</th>
-                    <th>Fecha</th>
-                    <th>Acciones</th>
-                </tr>
-            </thead>
-            <tbody></tbody>
-        </table>
+  <!-- ***** Preloader Start ***** -->
+  <div id="js-preloader" class="js-preloader">
+    <div class="preloader-inner">
+      <span class="dot"></span>
+      <div class="dots">
+        <span></span>
+        <span></span>
+        <span></span>
+      </div>
     </div>
+  </div>
+  <!-- ***** Preloader End ***** -->
 
-    <script src="../Js/registroInventarioJS.js"></script>
-</body>
+  <!-- ***** Header Area Start ***** -->
+  <header class="header-area header-sticky">
+    <div class="container">
+        <div class="row">
+            <div class="col-12">
+                <nav class="main-nav">
+                    <!-- ***** Logo Start ***** -->
+                    <a href="index.html" class="logo">
+                        <img src="../assets/images/logo.png" alt="">
+                    </a>
+                    <!-- ***** Logo End ***** -->
+                    <!-- ***** Menu Start ***** -->
+                    <ul class="nav">
+                        <li><a href="index.html" class="active">Home</a></li>
+                        <li><a href="browse.html">Browse</a></li>
+                        <li><a href="details.html">Details</a></li>
+                        <li><a href="streams.html">Streams</a></li>
+                        <li><a href="profile.html">Profile <img src="../assets/images/profile-header.jpg" alt=""></a></li>
+                    </ul>   
+                    <a class='menu-trigger'>
+                        <span>Menu</span>
+                    </a>
+                    <!-- ***** Menu End ***** -->
+                </nav>
+            </div>
+        </div>
+    </div>
+  </header>
+  <!-- ***** Header Area End ***** -->
+
+  <div class="container">
+    <div class="row">
+      <div class="col-lg-12">
+        <div class="page-content">
+
+          <!-- ***** Banner Start ***** -->
+          <div class="main-banner">
+            <div class="row">
+              <div class="col-lg-7">
+                <div class="header-text">
+                  <h6>Bienvenido a la gestion de registro de inventario</h6>
+                  <h4><em>Ingresa</em> todas las fichas en stock</h4>
+                </div>
+              </div>
+            </div>
+          </div>
+          <!-- ***** Banner End ***** -->
+
+          <!-- ***** Filtrado de productos ***** -->
+          <div class="gaming-library">
+            <div class="col-lg-12">
+              <div class="heading-section">
+                <h4><em>Personaliza tu</em> Registro</h4>
+              </div>
+              <div style="text-align: center;" class="item">
+                <ul>
+                    <form id="registroForm">
+                        <ul>
+                            <li><label for="nombre"><h4>Nombre del</h4><span>Registro</span></label></li>
+                            <input type="text" id="nombre" name="nombre" required>
+                        </ul>
+                        <ul>
+                            <li><h4>Tipo del</h4><span>Registro</span></li>
+                            <li><label for="tipo">Tipo del Registro:</label>
+                                <select id="tipo" name="tipo" required>
+                                    <option value="COMPRA">Compra</option>
+                                    <option value="VENTA">Venta</option>
+                                </select>
+                            </li>
+                        </ul>
+                        <ul>
+                            <li><h4>Ingreso de </h4><span>Productos y Cantidades (JSON)</span></li>
+                            <li><label for="productos">Productos y Cantidades (JSON):</label>
+                                <textarea id="productos" name="productos" rows="5" required placeholder='{"1": 10, "2": 5}'></textarea>
+                            </li>
+                        </ul>
+                        <ul>
+                            <li><h4>Finalizar el</h4><span>Ingreso</span></li>
+                            <button type="submit">Registrar</button>
+                        </ul>
+                    </form>
+
+                    <div id="response"></div>
+                    <li><h4>Registros de </h4><span>Inventario</span></li>
+                    <table id="registrosTable" style="margin: 20px auto; display: table;">
+                        <thead>
+                            <tr>
+                                <th style="padding-right: 40px;"><h4>ID</h4></th>
+                                <th style="padding-right: 80px;"><h4>Nombre</h4></th>
+                                <th style="padding-right: 60px;"><h4>Tipo</h4></th>
+                                <th style="padding-right: 70px;"><h4>Fecha</h4></th>
+                                <th style="padding-right: 80px;"><h4>Acciones</h4></th>
+                            </tr>
+                        </thead>
+                        <tbody></tbody>
+                    </table>
+                </ul>
+              </div>
+            </div>
+            <div class="col-lg-12">
+            </div>
+          </div>
+          <!-- ***** Filtrado de productos End ***** -->
+
+        </div>
+      </div>
+    </div>
+  </div>
+  
+  <footer>
+    <div class="container">
+      <div class="row">
+        <div class="col-lg-12">
+          <p>Copyright © 2036 <a href="#">Cyborg Gaming</a> Company. All rights reserved. 
+          
+          <br>Design: <a href="https://templatemo.com" target="_blank" title="free CSS templates">TemplateMo</a></p>
+        </div>
+      </div>
+    </div>
+  </footer>
+
+
+  <!-- Scripts -->
+
+  <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.7.1/jquery.min.js"></script>
+  <script src="../Js/registroInventarioJS.js"></script>
+
+  <!-- Bootstrap core JavaScript -->
+  <script src="../vendor/jquery/jquery.min.js"></script>
+  <script src="../vendor/bootstrap/js/bootstrap.min.js"></script>
+  <script src="../assets/js/isotope.min.js"></script>
+  <script src="../assets/js/owl-carousel.js"></script>
+  <script src="../assets/js/tabs.js"></script>
+  <script src="../assets/js/popup.js"></script>
+  <script src="../assets/js/custom.js"></script>
+
+
+  </body>
+
 </html>
