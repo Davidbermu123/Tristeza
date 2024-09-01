@@ -58,8 +58,11 @@
                       <br>
                       <input id="usuariociudad" placeholder="Ciudad">
                       <br>
-                      <input id="usuariocontrasena" type="password" placeholder="Contraseña">
-                      <br>
+                      <div>
+                        <input id="usuariocontrasena" type="password" placeholder="Contraseña">
+                        <button type="button" onclick="togglePasswordVisibility()">Mostrar/Ocultar</button>
+                        <button type="button" onclick="generatePassword()">Generar Contraseña</button>
+                    </div>
                       <button onclick="saveUsuario()">Continuar registro</button>
                       <br>
                       <button onclick="regresar()">Salir</button>

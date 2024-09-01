@@ -6,13 +6,13 @@ import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
 
 @Entity
-public class pedido {
+public class Pedido {
 
     @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    @GeneratedValue(strategy= GenerationType.IDENTITY)
     private Long idPedido;
     
-    private Long idUsuario;
+    private String username;
     private String nombreProducto;
     private Integer cantidadPedido;
     private String estado;
@@ -24,11 +24,11 @@ public class pedido {
     public void setIdPedido(Long idPedido) {
         this.idPedido = idPedido;
     }
-    public Long getIdUsuario() {
-        return idUsuario;
+    public String getUsername() {
+        return username;
     }
-    public void setIdUsuario(Long idUsuario) {
-        this.idUsuario = idUsuario;
+    public void setUsername(String username) {
+        this.username = username;
     }
     public String getNombreProducto() {
         return nombreProducto;

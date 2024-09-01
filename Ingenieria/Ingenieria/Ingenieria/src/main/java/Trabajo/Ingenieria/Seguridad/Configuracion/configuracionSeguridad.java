@@ -17,7 +17,7 @@ import lombok.RequiredArgsConstructor;
 public class configuracionSeguridad {
     private final jwtFiltroAutenticacion jwtAuthenticationFilter;
     private final AuthenticationProvider authProvider;
-  private final String[] whitelist={"/auth/**","/clienteControlador/**","/Css/**","/assets/**","/Vistas/**","/Js/**","/Imagenes/**","/vendor/**",
+  private final String[] whitelist={"/auth/**","/pedidos/**","/requestFichasStock/**","/clienteControlador/**","/Css/**","/assets/**","/Vistas/**","/Js/**","/Imagenes/**","/vendor/**",
   "index.html"};
     @Bean
     public SecurityFilterChain securityFilterChain(HttpSecurity http) throws Exception
