@@ -124,15 +124,21 @@ function verDetalles(idRegistro) {
                 },
                 data: JSON.stringify(idsProductos),
                 success: function(productosNombres) {
-                    const productosConNombres = Object.fromEntries(
-                        Object.entries(productos).map(([id, cantidad]) => [productosNombres[id], cantidad])
-                    );
+                    const productosConNombres = {};
+
+                    for (const [id, productInfo] of Object.entries(productos)) {
+                        const nombreProducto = productosNombres[parseInt(id)];
+                        productosConNombres[nombreProducto] = {
+                            cantidad: productInfo.cantidad,
+                            precioTotal: productInfo.precioTotal
+                        };
+                    }
 
                     const invoiceData = {
-                        client_name: nombre,
-                        tipo: tipo, // Fill in address if available
-                        invoice_date: fecha,
-                        items: productosConNombres
+                        fechaEntrada: fecha,
+                        nombre: nombre,
+                        tipo: tipo,
+                        productos: productosConNombres
                     };
 
                     $.ajax({
