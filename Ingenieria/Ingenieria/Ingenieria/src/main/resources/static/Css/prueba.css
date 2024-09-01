@@ -1,0 +1,68 @@
+        /* Estilos generales */
+        .flex { display: flex; }
+        .flex-1 { flex: 1; }
+        .space-y-2 > * + * { margin-top: 0.5rem; }
+        .w-full { width: 100%; }
+        .p-2 { padding: 0.5rem; }
+        .p-4 { padding: 1rem; }
+        .border { border: 1px solid #ccc; }
+        .border-gray-300 { border-color: #d1d5db; }
+        .border-gray-400 { border-color: #4b5563; } /* Color de borde de las imágenes */
+        .rounded { border-radius: 0.25rem; }
+        .rounded-lg { border-radius: 0.5rem; }
+        .mb-4 { margin-bottom: 1rem; }
+        .mr-4 { margin-right: 1rem; }
+        
+        
+        .page-content .delete-button {
+            background-color: #F505A5; /* Color de fondo de la x */
+            color: #fff; /* Color del texto de la x */
+            font-size: 0.75rem; /* Tamaño de fuente pequeño */
+            width: 24px; /* Ancho específico para la x */
+            height: 24px; /* Alto específico para la x */
+            border-radius: 50%; /* Redondear la x */
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            padding: 0;
+            position: absolute;
+            top: 4px; /* Espaciado superior */
+            right: 4px; /* Espaciado derecho */
+        }
+    
+        .page-content img {
+            width: 150px; /* Ancho específico para las imágenes */
+            height: 150px; /* Alto específico para las imágenes */
+            object-fit: cover; /* Ajuste de imagen para mantener la proporción */
+            border: 1px solid #4b5563; /* Borde de la imagen */
+        }
+    
+        .bg-gray-700 { background-color: #4a5568; } /* Fondo gris oscuro para inputs y selects */
+        .text-gray-300 { color: #e2e8f0; } /* Color de texto gris claro */
+        
+        /* Botones */
+        .bg-blue-500 {
+            background-color: #F505A5; /* Color de fondo del botón */
+        }
+        .bg-blue-500:hover {
+            background-color: #e3a0c6; /* Color de fondo al pasar el cursor */
+        }
+        .bg-green-500 {
+            background-color: #F505A5; /* Color de fondo del botón de confirmar */
+        }
+        .bg-green-500:hover {
+            background-color: #e3a0c6; /* Color de fondo al pasar el cursor */
+        }
+        .text-white { color: #fff; }
+        .hover\:bg-blue-600:hover { background-color: #e3a0c6; } /* Hover para el botón azul */
+        .hover\:bg-green-600:hover { background-color: #e3a0c6; } /* Hover para el botón verde */
+
+        /* Estilo para el texto de stock disponible */
+        .stock-text {
+        color: #F505A5; /* Texto blanco */
+        }
+        .main-banner {
+            text-align: center; /* Centra el texto horizontalmente */
+        }
+
+  
