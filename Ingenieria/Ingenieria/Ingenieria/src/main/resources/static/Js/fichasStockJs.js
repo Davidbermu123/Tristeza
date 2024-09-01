@@ -1,8 +1,5 @@
 let token = localStorage.getItem('token');
 
-verificarTokenYRedireccionarALogin();
-mostrar_todos();
-
 function verificarTokenYRedireccionarALogin() {
 
     // Verificar si el token está presente
@@ -16,6 +13,9 @@ function verificarTokenYRedireccionarALogin() {
         console.log(username);
     }
 }
+
+verificarTokenYRedireccionarALogin();
+mostrar_todos();
 
 function filterItems() {
     const precioFiltro = document.getElementById('precio').value;

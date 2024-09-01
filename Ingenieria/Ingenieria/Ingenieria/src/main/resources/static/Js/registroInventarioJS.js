@@ -1,3 +1,15 @@
+let token = localStorage.getItem('token');
+function verificarTokenYRedireccionarALogin() {
+    if (token === null) {
+        window.location.href = '/Vistas/inicioVista.html';
+    } else {
+        var tokenParts = token.split('.');
+        var tokenPayload = JSON.parse(atob(tokenParts[1]));
+        var username=tokenPayload.sub;
+        console.log(username);
+    }
+}
+
 window.onload = function() {
     verificarTokenYRedireccionarALogin();
     cargarRegistros(); // Cargar registros al cargar la página
@@ -26,7 +38,7 @@ window.onload = function() {
                 url: '/registroInventario/crearRegistro',
                 method: 'POST',
                 headers: {
-                    'Authorization': 'Bearer ' + localStorage.getItem('token'),
+                    'Authorization': 'Bearer ' + token,
                     'Content-Type': 'application/json'
                 },
                 data: JSON.stringify(requestBody),
@@ -45,20 +57,12 @@ window.onload = function() {
     });
 }
 
-
-function verificarTokenYRedireccionarALogin() {
-    const token = localStorage.getItem('token');
-    if (token === null) {
-        window.location.href = '/Vistas/inicioVista.html';
-    }
-}
-
 function cargarRegistros() {
     $.ajax({
         url: '/registroInventario/obtenerRegistros',
         method: 'GET',
         headers: {
-            'Authorization': 'Bearer ' + localStorage.getItem('token'),
+            'Authorization': 'Bearer ' + token,
             'Content-Type': 'application/json'
         },
         success: function(data) {
@@ -104,7 +108,7 @@ function verDetalles(idRegistro) {
         url: `/registroInventario/obtenerRegistro/${idRegistro}`,
         method: 'GET',
         headers: {
-            'Authorization': 'Bearer ' + localStorage.getItem('token'),
+            'Authorization': 'Bearer ' + token,
             'Content-Type': 'application/json'
         },
         success: function(registro) {
@@ -119,7 +123,7 @@ function verDetalles(idRegistro) {
                 url: '/registroInventario/obtenerNombresProductos',
                 method: 'POST',
                 headers: {
-                    'Authorization': 'Bearer ' + localStorage.getItem('token'),
+                    'Authorization': 'Bearer ' + token,
                     'Content-Type': 'application/json'
                 },
                 data: JSON.stringify(idsProductos),
