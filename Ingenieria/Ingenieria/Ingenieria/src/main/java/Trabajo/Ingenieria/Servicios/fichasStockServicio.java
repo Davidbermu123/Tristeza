@@ -6,6 +6,7 @@ import org.springframework.stereotype.Service;
 
 import Trabajo.Ingenieria.Entidades.fichasStockEntidad;
 import Trabajo.Ingenieria.Repositorios.fichasStockRepositorio;
+import jakarta.transaction.Transactional;
 
 @Service
 public class fichasStockServicio {
@@ -31,6 +32,24 @@ public class fichasStockServicio {
 
     public List<fichasStockEntidad> findProductsByName(String name) {
         return fichasStockRepositorio.findProductsByName(name);
+    }
+
+    @Transactional
+    public void actualizarStock(String nombreItem, int cantidadPedido) {
+        // Busca el producto por nombre
+        fichasStockEntidad producto = fichasStockRepositorio.findProductsByName(nombreItem).get(0);
+
+        // Resta la cantidad del pedido al stock actual
+        int nuevoStock = producto.getStockItem() - cantidadPedido;
+
+        // Asegúrate de que el stock no sea negativo
+        if (nuevoStock < 0) {
+            nuevoStock = 0; // o puedes lanzar una excepción si esto no debería suceder
+        }
+
+        // Actualiza el stock en la base de datos
+        producto.setStockItem(nuevoStock);
+        fichasStockRepositorio.guardarElementoFichasStock(producto);
     }
 
 }
