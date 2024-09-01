@@ -10,7 +10,7 @@ import Trabajo.Ingenieria.Repositorios.clienteRepositorio;
 
 @Service
 public class clienteServicio {
-  @Autowired
+    @Autowired
     private clienteRepositorio usuarioRepository;
     
     public usuario findByUsername(String username){
