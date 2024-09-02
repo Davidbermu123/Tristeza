@@ -1,3 +1,27 @@
+$(document).ready(function() {
+    // Mostrar/Ocultar contraseña
+    $("#togglePassword").click(function() {
+        const passwordField = $("#usuariocontrasena");
+        const eyeIcon = $("#eyeIcon");
+
+        const type = passwordField.attr("type") === "password" ? "text" : "password";
+        passwordField.attr("type", type);
+
+        // Cambiar el icono del botón
+        eyeIcon.toggleClass('fa-eye fa-eye-slash');
+    });
+
+    // Lógica para el botón de inicio de sesión
+    $("#loginBtn").click(function() {
+        logUsuario();
+    });
+
+    // Asociar la función regresar al botón de salir
+    $("#regresarBtn").click(function() {
+        regresar();
+    });
+});
+
 function logUsuario() {
     var alias = $("#usuarioalias").val();
     var contrasena = $("#usuariocontrasena").val();
@@ -20,7 +44,6 @@ function logUsuario() {
         type: 'POST',
         contentType: 'application/json',
         data: JSON.stringify(data),
-        // Continuación de la función success en la solicitud AJAX
         success: function(response) {
             console.log('Token recibido:', response.token);
             // Guardar el token de autenticación en el almacenamiento local
@@ -41,9 +64,9 @@ function logUsuario() {
                 success: function(role) {
                     // Redirigir según el rol del usuario
                     if (role === 'ADMIN') {
-                        window.location.href = "/vistas/admin.html"; // Redireccionar a la página de administrador
+                        window.location.href = "/Vistas/registroVista.html"; // Redireccionar a la página de administrador
                     } else if (role === 'USER') {
-                        window.location.href = "/Vistas/registroVista.html"; // Redireccionar a la página de usuario normal
+                        window.location.href = "/index.html"; // Redireccionar a la página de usuario normal
                     } else {
                         alert('Rol desconocido.');
                     }
@@ -62,5 +85,8 @@ function logUsuario() {
     });
 }
 
-// Asociar la función al evento click del botón de inicio de sesión
-$("#loginBtn").click(logUsuario);
+function regresar() {
+    if (confirm("¿Estás seguro de que quieres salir?")) {
+        window.history.back(); // Regresar a la página anterior
+    }
+}
