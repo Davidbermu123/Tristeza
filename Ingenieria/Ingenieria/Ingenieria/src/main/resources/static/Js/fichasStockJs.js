@@ -1,8 +1,5 @@
 let token = localStorage.getItem('token');
 
-verificarTokenYRedireccionarALogin();
-mostrar_todos();
-
 function verificarTokenYRedireccionarALogin() {
 
     // Verificar si el token está presente
@@ -16,6 +13,16 @@ function verificarTokenYRedireccionarALogin() {
         console.log(username);
     }
 }
+
+verificarTokenYRedireccionarALogin();
+mostrar_todos();
+
+
+document.addEventListener('DOMContentLoaded', function () {
+    verificarTokenYRedireccionarALogin();
+    mostrar_todos();
+});
+
 
 function filterItems() {
     const precioFiltro = document.getElementById('precio').value;
@@ -40,13 +47,13 @@ function filterItems() {
         headers: {
             'Authorization': 'Bearer ' + token
         },
-        success: function(data) {
+        success: function (data) {
             console.log("Datos filtrados recibidos: ", data);
 
             $("#imagenFicha").empty();
 
             if (Array.isArray(data)) {
-                $.each(data, function(index, fichaExistente) {
+                $.each(data, function (index, fichaExistente) {
                     // Filtrar los datos en el cliente
                     let mostrar = true;
 
@@ -61,9 +68,9 @@ function filterItems() {
                     // Solo mostrar el item si cumple con los filtros
                     if (mostrar) {
                         var item = $('<div class="col-lg-3 col-sm-6"></div>');
-                        
+
                         var itemInner = $('<div class="item"></div>');
-                        
+
                         var imagen = $('<img>');
                         imagen.attr("src", fichaExistente.imagenItem);
                         imagen.attr("alt", fichaExistente.nombreItem);
@@ -86,34 +93,34 @@ function filterItems() {
                 console.error("Los datos recibidos no son un array.");
             }
         },
-        error: function(xhr, status, error) {
+        error: function (xhr, status, error) {
             console.error('Error al filtrar los items:', error);
         }
     });
 }
 
-function mostrar_todos(){
+function mostrar_todos() {
     $.ajax({
         url: '/requestFichasStock/getFichasStock',
         type: 'GET',
         headers: {
             'Authorization': 'Bearer ' + token
         },
-        success: function(data) {
+        success: function (data) {
             // Limpiamos el contenedor principal antes de añadir nuevos elementos
             $("#imagenFicha").empty();
 
-            $.each(data, function(index, fichaExistente) {
+            $.each(data, function (index, fichaExistente) {
                 // Creamos la estructura completa para cada ficha
                 var item = $('<div class="col-lg-3 col-sm-6"></div>');
-                
+
                 var itemInner = $('<div class="item"></div>');
-                
+
                 var imagen = $('<img>');
                 imagen.attr("src", fichaExistente.imagenItem);  // URL de la imagen
                 imagen.attr("alt", fichaExistente.nombreItem);  // Texto alternativo
 
-                var titulo = $('<h4></h4>').html(fichaExistente.nombreItem +  '</span>');
+                var titulo = $('<h4></h4>').html(fichaExistente.nombreItem + '</span>');
 
                 var lista = $('<ul></ul>');
                 lista.append('<li><i class="fa-solid fa-money-bill-wave" style="color: #1cd08b;"></i> ' + fichaExistente.precioItem + '</li>');
@@ -131,7 +138,7 @@ function mostrar_todos(){
                 $("#imagenFicha").append(item);
             });
 
-        },error: function(xhr, status, error) {
+        }, error: function (xhr, status, error) {
             console.error('Error al verificar la existencia:', error);
         }
     });

@@ -1,0 +1,174 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@100;200;300;400;500;600;700;800;900&display=swap" rel="stylesheet">
+
+    <title>Cyborg - Awesome HTML5 Template</title>
+
+    <!-- Bootstrap core CSS -->
+    <link href="../vendor/bootstrap/css/bootstrap.min.css" rel="stylesheet">
+
+    <!-- Additional CSS Files -->
+    <link rel="stylesheet" href="../assets/css/fontawesome.css">
+    <link rel="stylesheet" href="../assets/css/templatemo-cyborg-gaming.css">
+    <link rel="stylesheet" href="../assets/css/owl.css">
+    <link rel="stylesheet" href="../assets/css/animate.css">
+    <link rel="stylesheet" href="https://unpkg.com/swiper@7/swiper-bundle.min.css" />
+
+    <!-- Custom CSS for Profile Page -->
+    <link rel="stylesheet" href="../Css/profile.css">
+    <style>
+    </style>
+</head>
+
+<body>
+    <!-- ***** Preloader Start ***** -->
+    <div id="js-preloader" class="js-preloader">
+        <div class="preloader-inner">
+            <span class="dot"></span>
+            <div class="dots">
+                <span></span>
+                <span></span>
+                <span></span>
+            </div>
+        </div>
+    </div>
+    <!-- ***** Preloader End ***** -->
+
+    <!-- ***** Header Area Start ***** -->
+    <header class="header-area header-sticky">
+        <div class="container">
+            <div class="row">
+                <div class="col-12">
+                    <nav class="main-nav">
+                        <!-- ***** Logo Start ***** -->
+                        <a href="index.html" class="logo">
+                            <img src="../assets/images/logo.png" alt="">
+                        </a>
+                        <!-- ***** Logo End ***** -->
+                        <!-- ***** Search End ***** -->
+                        <div class="search-input">
+                            <form id="search" action="#">
+                                <input type="text" placeholder="Realiza una busqueda" id='searchText' name="searchKeyword" onkeypress="handle" />
+                                <i class="fa fa-search"></i>
+                            </form>
+                        </div>
+                        <!-- ***** Search End ***** -->
+                        <!-- ***** Menu Start ***** -->
+                        <ul class="nav">
+                            <li><a href="index.html">Inicio</a></li>
+                            <li><a href="browse.html">Catalogo</a></li>
+                            <li><a href="details.html">Compras</a></li>
+                            <li><a href="streams.html">Ventas</a></li>
+                        </ul>
+                        <a class='menu-trigger'>
+                            <span>Menu</span>
+                        </a>
+                        <!-- ***** Menu End ***** -->
+                    </nav>
+                </div>
+            </div>
+        </div>
+    </header>
+    <!-- ***** Header Area End ***** -->
+
+    <div class="container">
+        <div class="row">
+            <div class="col-lg-12">
+                <div class="page-content">
+                    <!-- ***** Banner Start ***** -->
+                    <div class="row">
+                        <div class="col-lg-12">
+                            <div class="main-profile">
+                                <div class="row">
+                                    <div class="col-lg-4">
+                                        <img src="../assets/images/perfil.jpg" alt="" style="border-radius: 23px;">
+                                    </div>
+                                    <div class="col-lg-4 align-self-center">
+                                        <div class="main-info header-text">
+                                            <span>Online</span>
+                                            <h4 id="username">Loading...</h4>
+                                            <p>Bienvenido a tu perfil, puedes editar tus datos personales aquí.</p>
+                                            <div class="main-border-button">
+                                                <a href="#">Comienza a editar</a>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="col-lg-4 align-self-center">
+                                        <ul>
+                                            <li>Compras realizadas<span>3</span></li>
+                                            <li>Elementos Favoritos<span>16</span></li>
+                                            <li>Devoluciones <span>None</span></li>
+                                        </ul>
+                                    </div>
+                                </div>
+
+                                <!-- Formulario de selección de alias y actualización de usuario -->
+                                <div class="row">
+                                    <div class="col-lg-12">
+                                        <div class="form-update-user">
+                                            <h4>Actualiza tu información</h4>
+                                            <!-- Selección del alias -->
+                                            <div class="select-username">
+                                                <label for="usernameSelect">Selecciona un Alias:</label>
+                                                <select id="usernameSelect" class="form-control">
+                                                    <option value="">Selecciona un Alias</option>
+                                                    <!-- Opciones dinámicas de alias se agregarán aquí -->
+                                                </select>
+                                            </div>
+                                            <form id="updateProfileForm">
+                                                <div class="form-group">
+                                                    <label for="nombre">Nombre:</label>
+                                                    <input type="text" id="nombre" name="nombre" class="form-control">
+                                                </div>
+                                                <div class="form-group">
+                                                    <label for="apellido">Apellido:</label>
+                                                    <input type="text" id="apellido" name="apellido" class="form-control">
+                                                </div>
+                                                <div class="form-group">
+                                                    <label for="ciudad">Ciudad:</label>
+                                                    <input type="text" id="ciudad" name="ciudad" class="form-control">
+                                                </div>
+                                                <div class="form-group">
+                                                    <label for="direccion">Dirección:</label>
+                                                    <input type="text" id="direccion" name="direccion" class="form-control">
+                                                </div>
+                                                <div class="form-group">
+                                                    <label for="telefono">Teléfono:</label>
+                                                    <input type="text" id="telefono" name="telefono" class="form-control">
+                                                </div>
+                                                <button type="submit" class="btn btn-primary">Actualizar</button>
+                                            </form>
+                                        </div>
+                                    </div>
+                                </div>
+                                <!-- Fin del formulario -->
+
+                            </div>
+                        </div>
+                    </div>
+                    <!-- ***** Banner End ***** -->
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Scripts -->
+    <script src="../vendor/jquery/jquery.min.js"></script>
+    <script src="../vendor/bootstrap/js/bootstrap.bundle.min.js"></script>
+    <script src="../assets/js/owl-carousel.js"></script>
+    <script src="../assets/js/animation.js"></script>
+    <script src="../assets/js/imagesloaded.js"></script>
+    <script src="../assets/js/custom.js"></script>
+    <script src="https://unpkg.com/swiper@7/swiper-bundle.min.js"></script>
+
+    <!-- Custom JavaScript for Profile Page -->
+    <script src="../assets/js/profile.js"></script>
+
+</body>
+
+</html>

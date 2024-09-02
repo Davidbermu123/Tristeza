@@ -25,7 +25,12 @@ private clienteServicio usuarioService;
     public List<usuario> getAllUs(){
         return usuarioService.getAllUsuarios();
     }
-
+    
+    @GetMapping("/obtenerPerfil")
+    public usuario obtenerPerfilPorAlias(@RequestParam("alias") String alias) {
+        return usuarioService.findByUsername(alias);
+    }
+    
     @PostMapping("/guardarUs")
     public usuario guardarUsuario(@RequestBody usuario k){
         return usuarioService.save(k);
@@ -55,7 +60,12 @@ private clienteServicio usuarioService;
     public List<usuario> obtenerRol(@RequestParam role rol){
         return usuarioService.obtenerRol(rol);
     }
-
+    
+    @GetMapping("/obtenerTodosAlias")
+    public List<String> obtenerTodosAlias() {
+        return usuarioService.obtenerTodosAlias();
+    }
+    
     @PutMapping("/updateUsuario")
     public void actualizarUsuarioPorUsername(@RequestParam String username,
                                             @RequestParam String nombre,

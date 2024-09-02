@@ -1,6 +1,7 @@
 package Trabajo.Ingenieria.Servicios;
 
 import java.util.List;
+import java.util.stream.Collectors;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -33,6 +34,13 @@ public class clienteServicio {
     public List<usuario> obtenerRol(role rol){
         return usuarioRepository.encontrarRol(rol);
     }  
+
+    public List<String> obtenerTodosAlias() {
+    return usuarioRepository.getAllUsuarios().stream()
+        .map(usuario::getUsername)
+        .collect(Collectors.toList());
+    }
+
 
     public void actualizarUsuarioPorUsername(String usernameBusqueda, String nombre, String apellido, String ciudad, String direccion, role rol, String telefono) {
         // Obtener el usuario a actualizars

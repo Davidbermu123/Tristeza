@@ -1,0 +1,126 @@
+/* Estilo para el input de búsqueda */
+#search input {
+  background-color: #ffffff;
+  height: 46px;
+  border-radius: 23px;
+  border: none;
+  color: #666;
+  font-size: 14px;
+  padding: 0px 15px 0px 45px;
+}
+
+#search i {
+  position: absolute;
+  color: #666;
+  left: 20px;
+  top: 16px;
+  width: 18px;
+  height: 18px;
+  font-size: 16px;
+}
+
+/* Estilo para la sección de streamers */
+.top-streamers-propio {
+    border-radius: 23px;
+    background-color: #1f2122;
+    padding: 30px;
+    max-height: auto;
+    min-height: auto;
+}
+
+.top-streamers-propio ul li {
+  display: inline-block;
+  width: 100%;
+  border-bottom: 3px solid #ffffff;
+  margin-bottom: 25px;
+  padding-bottom: 25px;
+}
+
+.top-streamers-propio ul li:last-child {
+  border-bottom: none;
+  padding-bottom: 0px;
+  margin-bottom: 0px;
+}
+
+.top-streamers-propio ul li h6 {
+  display: inline;
+  font-size: 14px;
+  color: #ec6090;
+  font-weight: 400;
+}
+
+.top-streamers-propio ul li h6 i {
+  color: #fff;
+  background-color: #ec6090;
+  border-radius: 50%;
+  font-size: 12px;
+  width: 20px;
+  height: 20px;
+  display: inline-block;
+  text-align: center;
+  line-height: 20px;
+  margin-right: 3px;
+}
+
+.top-streamers-propio ul li .main-button {
+  float: right;
+}
+
+.top-streamers-propio ul li .main-button button {
+  padding: 8px 20px;
+}
+
+/* Estilo general de botones */
+.main-button button, .boton-buscar button {
+  font-size: 14px;
+  color: #fff;
+  background-color: #e75e8d;
+  padding: 12px 30px;
+  display: inline-block;
+  border-radius: 25px;
+  font-weight: 400;
+  text-transform: capitalize;
+  letter-spacing: 0.5px;
+  transition: all .3s;
+  position: relative;
+  overflow: hidden;
+}
+
+.main-button button:hover, .boton-buscar button:hover {
+  background-color: #fff;
+  color: #e75e8d;
+}
+
+/* Botones con borde */
+.main-border-button button, .boton-buscar button {
+  color: #ec6090;
+  background-color: transparent;
+  border: 1px solid #ec6090;
+}
+
+.main-border-button button:hover, .boton-buscar button:hover {
+  border-color: #fff;
+  background-color: #fff;
+  color: #e75e8d;
+}
+form label {
+    color: #ffffff; /* Blanco */
+  }
+
+/* Botones desactivados */
+.border-no-active button, .boton-buscar button {
+  border-color: #666;
+  color: #666;
+}
+
+.border-no-active button:hover, .boton-buscar button:hover {
+  border-color: #666;
+  color: #666;
+  background-color: transparent;
+}
+
+/* Resultado de búsqueda */
+.resultado-busqueda {
+  margin-top: 20px;
+  height: auto;
+}

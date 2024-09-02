@@ -1,4 +1,5 @@
 package Trabajo.Ingenieria.Controladores;
+
 import java.util.List;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -15,7 +16,8 @@ import Trabajo.Ingenieria.Servicios.fichasStockServicio;
 
 public class fichasStockControlador {
 
-    @Autowired fichasStockServicio fichasStockServicio;
+    @Autowired
+    private fichasStockServicio fichasStockServicio;
 
     @GetMapping("/getFichasStock")
     public List<fichasStockEntidad> getAllFichasStockEntidad(){
@@ -26,5 +28,5 @@ public class fichasStockControlador {
     public fichasStockEntidad guardarFichasStockEntidad(@RequestBody fichasStockEntidad e){
         return fichasStockServicio.save(e);
     }
-
+    
 }
