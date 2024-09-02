@@ -1,0 +1,52 @@
+/* Estilo general de la tabla */
+.tracking-table {
+    width: 100%;
+    border-collapse: collapse;
+    margin: 20px 0;
+    background-color: #333; /* Fondo oscuro para la tabla */
+    color: #fff; /* Letra blanca */
+}
+
+/* Encabezado de la tabla */
+.tracking-table thead {
+    background-color: #444; /* Color de fondo para el encabezado */
+}
+
+.tracking-table th {
+    padding: 12px 15px;
+    text-align: left;
+    font-weight: bold;
+}
+
+/* Celdas de la tabla */
+.tracking-table td {
+    padding: 12px 15px;
+    border-bottom: 1px solid #555; /* Borde inferior para las filas */
+}
+
+/* Color de fondo alternante para las filas */
+.tracking-table tbody tr:nth-child(even) {
+    background-color: #222;
+}
+
+.tracking-table tbody tr:nth-child(odd) {
+    background-color: #333;
+}
+
+/* Estilo para el menú desplegable */
+.status-selector {
+    width: 100%;
+    padding: 5px;
+    font-size: 14px;
+    background-color: #555; /* Fondo del menú desplegable */
+    color: #fff; /* Letra blanca del menú desplegable */
+    border: 1px solid #666; /* Borde del menú desplegable */
+    border-radius: 4px; /* Bordes redondeados */
+}
+
+/* Estilo para el menú desplegable cuando está enfocado */
+.status-selector:focus {
+    outline: none;
+    border-color: #4caf50; /* Borde verde cuando está enfocado */
+    background-color: #666; /* Fondo más claro cuando está enfocado */
+}
