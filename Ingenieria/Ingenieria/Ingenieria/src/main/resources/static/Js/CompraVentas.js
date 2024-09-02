@@ -1,6 +1,35 @@
+function verificarTokenYRedireccionarALogin() {
+    let token = localStorage.getItem('token');
+
+    if (token === null) {
+        window.location.href = '/Vistas/inicioVista.html';
+        return;
+    }
+
+    try {
+        let tokenParts = token.split('.');
+        if (tokenParts.length !== 3) {
+            throw new Error('Token JWT no válido.');
+        }
+
+        let tokenPayload = JSON.parse(atob(tokenParts[1]));
+        let username = tokenPayload.sub;
+        console.log(username);
+
+        // Guardar el username en una variable global para usarla más adelante
+        window.loggedInUsername = username;
+
+    } catch (error) {
+        console.error('Error al verificar el token:', error);
+        window.location.href = '/Vistas/inicioVista.html';
+    }
+}
+verificarTokenYRedireccionarALogin(); 
+
 $(document).ready(function () {
     var currentChart = null;
 
+    verificarTokenYRedireccionarALogin();
     function mostrarGrafico(graficoId) {
         $('#grafico-ventas-semanal').hide();
         $('#grafico-compras-semanal').hide();
@@ -129,6 +158,7 @@ $(document).ready(function () {
             }
         });
     }
+    
 
     function cargarVentasSemanal() {
         var hoy = new Date();
@@ -171,6 +201,7 @@ $(document).ready(function () {
             }
         });
     }
+    
 
     cargarVentasSemanal();  // Carga inicial de ventas
     $('#btn-ventas').click(cargarVentasSemanal);
