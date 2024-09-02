@@ -1,5 +1,5 @@
+let token = localStorage.getItem('token');
 function verificarTokenYRedireccionarALogin() {
-    let token = localStorage.getItem('token');
 
     if (token === null) {
         window.location.href = '/Vistas/inicioVista.html';
@@ -40,6 +40,63 @@ function changeStatus(element) {
     window.location.href = 'rastreoventaCliente.html';
 }
 
+function generarFactura(pedidoId) {
+    fetch('/pedidos/pedidoId/' + pedidoId, {
+        method: 'GET',
+        headers: {
+            'Authorization': 'Bearer ' + token
+        }
+    })
+    .then(response => response.json())
+    .then(data => {
+        if (data) {
+            let invoiceData = {
+                username: data.username,
+                nombreProducto: data.nombreProducto,
+                cantidadPedido: data.cantidadPedido,
+                estado: data.estado,
+                precioFinal: data.precioFinal
+            };
+
+            return fetch('http://127.0.0.1:5000/Venta', {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json'
+                },
+                body: JSON.stringify(invoiceData)
+            });
+        } else {
+            throw new Error("Pedido no encontrado.");
+        }
+    })
+    .then(response => {
+        if (!response.ok) {
+            throw new Error("Error en la solicitud.");
+        }
+        return response.blob();
+    })
+    .then(blob => {
+        if (blob.type === 'application/pdf' && blob.size > 0) {
+            const url = window.URL.createObjectURL(blob);
+            const a = document.createElement('a');
+            a.href = url;
+            a.download = 'Factura.pdf';
+            document.body.appendChild(a);
+            a.click();
+            document.body.removeChild(a);
+            window.URL.revokeObjectURL(url);
+        } else {
+            console.error('El blob no es un PDF válido o está vacío.');
+            alert("Error al generar la factura.");
+        }
+    })
+    .catch(error => {
+        console.error('Error details:', error);
+        alert("Error al generar la factura.");
+    });
+}
+
+
 function llenarTabla(pedidos) {
     var tbody = $('.tracking-table tbody');
     tbody.empty(); // Limpia cualquier contenido existente en la tabla
@@ -52,6 +109,7 @@ function llenarTabla(pedidos) {
             '<td>' + pedido.cantidadPedido + '</td>' +
             '<td>' + pedido.precioFinal + '</td>' +
             '<td>' + pedido.username + '</td>' +
+            '<td><button onclick="generarFactura(' + pedido.idPedido + ')">Descargar</button></td>' +
             '</tr>';
 
         tbody.append(fila);
