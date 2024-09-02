@@ -1,16 +1,15 @@
 package Trabajo.Ingenieria.Repositorios;
 
-import Trabajo.Ingenieria.Entidades.EntidadAnalisis;
+import Trabajo.Ingenieria.Entidades.registroInventarioEntidad;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Query;
 import org.springframework.stereotype.Repository;
-
-import java.time.LocalDate;
+import java.time.LocalDateTime;
 import java.util.List;
 
 @Repository
-public interface ComprasRepositorio extends JpaRepository<EntidadAnalisis, Long> {
+public interface ComprasRepositorio extends JpaRepository<registroInventarioEntidad, Long> {
 
-    @Query("SELECT e FROM EntidadAnalisis e WHERE e.Compras IS NOT NULL AND e.fechaCompras BETWEEN ?1 AND ?2")
-    List<EntidadAnalisis> findComprasPorFecha(LocalDate inicio, LocalDate fin);
+    @Query("SELECT r FROM registroInventarioEntidad r WHERE r.tipo = 0 AND r.fechaEntrada BETWEEN :inicio AND :fin")
+    List<registroInventarioEntidad> findComprasPorFecha(LocalDateTime inicio, LocalDateTime fin);
 }
