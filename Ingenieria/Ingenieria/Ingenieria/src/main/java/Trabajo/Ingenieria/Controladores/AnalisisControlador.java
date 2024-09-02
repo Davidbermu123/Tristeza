@@ -1,26 +1,25 @@
 package Trabajo.Ingenieria.Controladores;
 
-import Trabajo.Ingenieria.Entidades.EntidadAnalisis;
+import Trabajo.Ingenieria.Entidades.ProductInfo;
+import Trabajo.Ingenieria.Entidades.registroInventarioEntidad;
 import Trabajo.Ingenieria.Entidades.usuario;
 import Trabajo.Ingenieria.Servicios.AnalisisComprasService;
-import Trabajo.Ingenieria.Servicios.AnalisisVentasService;
 import Trabajo.Ingenieria.Servicios.clienteServicio;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.web.bind.annotation.*;
 
+import java.time.LocalDateTime;
+import java.time.format.DateTimeFormatter;
+import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
-import java.util.ArrayList;
 
 @RestController
 @RequestMapping("/graficos")
 public class AnalisisControlador {
-
-    @Autowired
-    private AnalisisVentasService ventasService;
 
     @Autowired
     private AnalisisComprasService comprasService;
@@ -28,44 +27,6 @@ public class AnalisisControlador {
     @Autowired
     private clienteServicio usuarioService;
 
-    @GetMapping("/rol")
-    public String obtenerRolPorUsuario() {
-        // Obtener el nombre de usuario del objeto Authentication
-        Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
-        String username = authentication.getName();
-
-        // Buscar el usuario en el servicio Usuario_modelos
-        usuario user = usuarioService.findByUsername(username);
-
-        // Verificar si el usuario existe y devolver su rol
-        if (user != null) {
-            return user.getRol().toString();
-        } else {
-            return "Usuario no encontrado";
-        }
-    }
-
-    @GetMapping("/ventas-semanal")
-    public List<Map<String, Object>> obtenerVentasDiarias(@RequestParam("inicio") String inicio, @RequestParam("fin") String fin) {
-        // Verificar el rol del usuario antes de procesar la solicitud
-        String rol = obtenerRolPorUsuario();
-        if (!"ADMIN".equals(rol) && !"VENTAS".equals(rol)) {
-            throw new SecurityException("No tienes permiso para acceder a esta información");
-        }
-
-        List<EntidadAnalisis> ventasDiarias = ventasService.obtenerVentasPorFecha(inicio, fin);
-        List<Map<String, Object>> ventasPorFecha = new ArrayList<>();
-        
-        for (EntidadAnalisis venta : ventasDiarias) {
-            Map<String, Object> ventaData = new HashMap<>();
-            ventaData.put("fecha", venta.getFechaVenta().toString());
-            ventaData.put("cantidad", venta.getVentas());
-            ventasPorFecha.add(ventaData);
-        }
-    
-        return ventasPorFecha;
-    }
-    
     @GetMapping("/compras-semanal")
     public List<Map<String, Object>> obtenerComprasDiarias(@RequestParam("inicio") String inicio, @RequestParam("fin") String fin) {
         // Verificar el rol del usuario antes de procesar la solicitud
@@ -74,16 +35,29 @@ public class AnalisisControlador {
             throw new SecurityException("No tienes permiso para acceder a esta información");
         }
 
-        List<EntidadAnalisis> comprasDiarias = comprasService.obtenerComprasPorFecha(inicio, fin);
+        DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd");
+        LocalDateTime fechaInicio = LocalDateTime.parse(inicio, formatter);
+        LocalDateTime fechaFin = LocalDateTime.parse(fin, formatter);
+
+        List<registroInventarioEntidad> comprasDiarias = comprasService.obtenerComprasPorFecha(fechaInicio, fechaFin);
         List<Map<String, Object>> comprasPorFecha = new ArrayList<>();
-    
-        for (EntidadAnalisis compra : comprasDiarias) {
-            Map<String, Object> compraData = new HashMap<>();
-            compraData.put("fecha", compra.getFechaCompras().toString());
-            compraData.put("cantidad", compra.getCompras());
-            comprasPorFecha.add(compraData);
+
+        for (registroInventarioEntidad compra : comprasDiarias) {
+            for (Map.Entry<Long, ProductInfo> entry : compra.getProductos().entrySet()) {
+                Map<String, Object> compraData = new HashMap<>();
+                compraData.put("fecha", compra.getFechaEntrada().toString());
+                compraData.put("cantidad", entry.getValue().getCantidad());
+                comprasPorFecha.add(compraData);
+            }
         }
-    
+
         return comprasPorFecha;
+    }
+    
+    private String obtenerRolPorUsuario() {
+        Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
+        String username = authentication.getName();
+        usuario user = usuarioService.findByUsername(username);
+        return (user != null) ? user.getRol().toString() : "Usuario no encontrado";
     }
 }
