@@ -19,15 +19,15 @@ public class PedidoService {
         return pedidoRepository.guardarPedido(p);
     }
 
-    public List<Pedido> obtenerTodosLosPedidos() {
-        return pedidoRepository. obtenerTodosLosPedidos();
+    public List<Pedido> getAllPedidos() {
+        return pedidoRepository.getAllPedidos();
     }
 
-    public List<Pedido> obtenerPedidosPorUsername(String username) {
-        return pedidoRepository.obtenerPedidosPorUsername(username); 
+    public List<Pedido> getPedidosByUsername(String username) {
+        return pedidoRepository.getPedidosByUsername(username); 
     }
 
-    public Optional<Pedido> obtenerPedidosPorId(Long Id) {
+    public Optional<Pedido> findById(Long Id) {
         return pedidoRepository.findById(Id); 
     }
 
@@ -41,4 +41,5 @@ public class PedidoService {
             throw new RuntimeException("Pedido no encontrado con ID: " + idPedido);
         }
     }
+    
 }

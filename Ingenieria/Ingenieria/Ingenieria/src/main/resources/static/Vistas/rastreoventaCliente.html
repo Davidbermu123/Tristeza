@@ -109,11 +109,33 @@
                 </div>
                 <p>Entregado</p>
             </div>
-            <!-- ** Registro de actualizaciones ** -->
-        <div id="update-log" class="update-log">
-            <!-- Los registros se agregarán aquí por JavaScript -->
+            <div id="status-log">
+                <h3>Registro de cambios de estado</h3>
+                <ul id="log-list"></ul> <!-- Aquí se añadirán los logs -->
+            </div>
         </div>
-        </div>        
+        <div class="container">
+          <div class="row">
+            <div class="col-lg-12">
+              <div id="order-details">
+                <h2>Detalles de tu pedido</h2>
+                <table id="orders-table" class="table">
+                  <thead>
+                    <tr>
+                      <th>ID</th>
+                      <th>Nombre del Producto</th>
+                      <th>Cantidad</th>
+                      <th>Estado</th>
+                    </tr>
+                  </thead>
+                  <tbody>
+                    <!-- Los detalles de los pedidos se agregarán aquí -->
+                  </tbody>
+                </table>
+              </div>
+            </div>
+          </div>
+        </div>              
         </div>
       </div>
     </div>

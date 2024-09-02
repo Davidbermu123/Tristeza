@@ -5,6 +5,10 @@ import java.util.Map;
 import java.util.Optional;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
+import org.springframework.security.core.context.SecurityContextHolder;
+import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
@@ -38,18 +42,18 @@ public class PedidoControlador {
     }
 
     @GetMapping("/todosPedidos")
-    public List<Pedido> obtenerTodosLosPedidos() {
-        return pedidoService.obtenerTodosLosPedidos();
+    public List<Pedido> getAllPedidos() {
+        return pedidoService.getAllPedidos();
     }
 
     @GetMapping("/pedidoUsuario/{username}")
-    public List<Pedido> obtenerPedidosPorUsername(@PathVariable String username) {
-        return pedidoService.obtenerPedidosPorUsername(username);
+    public List<Pedido> getPedidosByUsername(@PathVariable String username) {
+        return pedidoService.getPedidosByUsername(username);
     }
 
     @GetMapping("/pedidoId/{Id}")
-    public Optional<Pedido> obtenerPedidoPorId(@PathVariable Long Id) {
-        return pedidoService.obtenerPedidosPorId(Id);
+    public Optional<Pedido> findById(@PathVariable Long Id) {
+        return pedidoService.findById(Id);
     }
 
     @PutMapping("/actualizarEstado")
