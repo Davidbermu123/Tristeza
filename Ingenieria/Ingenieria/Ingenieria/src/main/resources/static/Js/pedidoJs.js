@@ -139,6 +139,9 @@ document.addEventListener('DOMContentLoaded', () => {
                             stockSpan.textContent = `Stock disponible: ${stock}`;
                             quantityInput.setAttribute('max', stock);
                             priceInput.value = price;
+                            console.log(price);
+
+                            window.priceInput = price;
 
                             updatePrice(index);
                         } else {
@@ -160,10 +163,11 @@ document.addEventListener('DOMContentLoaded', () => {
         const container = productForms.find(form => form.dataset.index == index);
         const quantity = container.querySelector('input[type="number"]').value;
         const stock = container.querySelector('span').textContent.match(/\d+/);
+        const priceFinal = window.priceInput;
         const price = container.querySelector('input[type="text"]');
 
         if (quantity > 0 && stock) {
-            price.value = (quantity * stock).toFixed(2);
+            price.value = (quantity * priceFinal).toFixed(2);
         } else {
             price.value = '';
         }
