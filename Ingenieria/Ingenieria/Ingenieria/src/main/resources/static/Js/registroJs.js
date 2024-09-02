@@ -20,7 +20,7 @@ function generatePassword() {
     const lowercase = "abcdefghijklmnopqrstuvwxyz";
     const uppercase = "ABCDEFGHIJKLMNOPQRSTUVWXYZ";
     const numbers = "0123456789";
-    const specialChars = "!@#$%^&*()_+~`|}{[]:;?><,./-=";
+    const specialChars = "!@#$%^&*()_+~*'¿¡|}{[]:;?><,./-=";
     
     let password = "";
 
@@ -92,5 +92,5 @@ function saveUsuario() {
 
 // Función para regresar a la página principal
 function regresar() {
-    window.location.href = "../index.html";
+    window.close();
 }
