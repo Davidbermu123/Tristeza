@@ -15,11 +15,11 @@
         
         
         .page-content .delete-button {
-            background-color: #F505A5; /* Color de fondo de la x */
-            color: #fff; /* Color del texto de la x */
+            background-color: #443a41d1; /* Color de fondo de la x */
+            color: #F505A5; /* Color del texto de la x */
             font-size: 0.75rem; /* Tamaño de fuente pequeño */
-            width: 24px; /* Ancho específico para la x */
-            height: 24px; /* Alto específico para la x */
+            width: 20px; /* Ancho específico para la x */
+            height: 20px; /* Alto específico para la x */
             border-radius: 50%; /* Redondear la x */
             display: flex;
             align-items: center;
