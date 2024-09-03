@@ -1,6 +1,8 @@
 package Trabajo.Ingenieria.Repositorios;
 
 import java.util.List;
+import java.util.Set;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
 
@@ -31,5 +33,9 @@ public class fichasStockRepositorio {
 
     public List<fichasStockEntidad> findProductsByName(String name) {
         return fichasStockCrudRepositorio.findByNombreItem(name);
+    }
+
+    public List<fichasStockEntidad> obtenerNombresDeProductos(Set<Long> idsProductos){
+        return fichasStockCrudRepositorio.findByIdItemIn(idsProductos);
     }
 }
