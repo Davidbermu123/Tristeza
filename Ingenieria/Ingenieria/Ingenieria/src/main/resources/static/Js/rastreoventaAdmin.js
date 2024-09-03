@@ -1,4 +1,5 @@
 let token = localStorage.getItem('token');
+
 function verificarTokenYRedireccionarALogin() {
 
     if (token === null) {
@@ -14,6 +15,7 @@ function verificarTokenYRedireccionarALogin() {
 
         let tokenPayload = JSON.parse(atob(tokenParts[1]));
         let username = tokenPayload.sub;
+        console.log(username);
 
         // Guardar el username en una variable global para usarla más adelante
         window.loggedInUsername = username;
@@ -25,21 +27,53 @@ function verificarTokenYRedireccionarALogin() {
 }
 verificarTokenYRedireccionarALogin(); 
 
-
-
-function changeStatus(element) {
-    verificarTokenYRedireccionarALogin(); 
-    // Obtiene el valor seleccionado
-    let selectedStatus = element.value;
-
-    // Guarda el estado actual en localStorage para que se sincronice con los íconos
-    localStorage.setItem('currentStatus', selectedStatus);
-
-    // Redirecciona a la página de los íconos para actualizar la vista
-    window.location.href = 'rastreoventaCliente.html';
+function buscarUsuarioPorAlias(nombre, callback) {
+    $.ajax({
+        url: '/controladorCliente/findbyalias', // URL del endpoint
+        method: 'GET',
+        headers: {
+            'Authorization': 'Bearer ' + token// Opcional: Si necesitas un token para la autenticación
+        },
+        data: {
+            username: nombre // Parámetro a enviar en la solicitud
+        },
+        success: function(response) {
+            callback(response);
+        },
+        error: function(xhr, status, error) {
+            console.error('Error al buscar el usuario:', error);
+            alert('Error al buscar el usuario.');
+        }
+    });
 }
 
+function changeStatus(element, idPedido) {
+    verificarTokenYRedireccionarALogin(); 
+    let selectedStatus = element.value;
 
+    // Enviar el nuevo estado al backend para actualizarlo en la base de datos
+    $.ajax({
+        url: '/pedidos/actualizarEstado/' + idPedido,
+        method: 'PUT',
+        data: { nuevoEstado: selectedStatus },
+        success: function(response) {
+            Swal.fire({
+                icon: 'success',
+                title: 'Estado actualizado',
+                text: "El estado se ha actualizado a " + selectedStatus
+            });
+        },
+        error: function(xhr, status, error) {
+            console.error('Error al actualizar el estado:', error);
+            Swal.fire({
+                icon: "error",
+                title: "Oops...",
+                text: "El estado no se actualizo nuevamente",
+                footer: '<a href="#">Why do I have this issue?</a>'
+              });
+        }
+    });
+}
 
 function generarFactura(pedidoId) {
     fetch('/pedidos/pedidoId/' + pedidoId, {
@@ -112,28 +146,37 @@ function generarFactura(pedidoId) {
     });
 }
 
-
 function llenarTabla(pedidos) {
     var tbody = $('.tracking-table tbody');
-    tbody.empty(); // Limpia cualquier contenido existente en la tabla
+    tbody.empty();
 
     pedidos.forEach(function(pedido) {
         buscarUsuarioPorAlias(pedido.username, function(response) {
-            console.log('Usuario encontrado:', response.direccion);
-        });
-        var fila = '<tr>' +
-            '<td>' + pedido.estado + '</td>' +
-            '<td>' + pedido.idPedido + '</td>' +
-            '<td>' + pedido.nombreProducto + '</td>' +
-            '<td>' + pedido.cantidadPedido + '</td>' +
-            '<td>' + pedido.precioFinal + '</td>' +
-            '<td>' + pedido.username + '</td>' +
-            '<td><button onclick="generarFactura(' + pedido.idPedido + ')">Descargar</button></td>' +
-            '</tr>';
+            var direccion = response.direccion;
 
-        tbody.append(fila);
+            var fila = '<tr>' +
+                '<td>' +
+                '<select onchange="changeStatus(this, ' + pedido.idPedido + ')">' +
+                    '<option value="Aceptado por la compañia"' + (pedido.estado === 'Aceptado por la compañia' ? ' selected' : '') + '>Aceptado por la compañia</option>' +
+                    '<option value="Alistando"' + (pedido.estado === 'Alistando' ? ' selected' : '') + '>Alistando</option>' +
+                    '<option value="En camino"' + (pedido.estado === 'En camino' ? ' selected' : '') + '>En camino</option>' +
+                    '<option value="Entregado"' + (pedido.estado === 'Entregado' ? ' selected' : '') + '>Entregado</option>' +
+                '</select>' +
+                '</td>' +
+                '<td>' + pedido.idPedido + '</td>' +
+                '<td>' + pedido.nombreProducto + '</td>' +
+                '<td>' + pedido.cantidadPedido + '</td>' +
+                '<td>' + pedido.precioFinal + '</td>' +
+                '<td>' + pedido.username + '</td>' +
+                '<td>' + direccion + '</td>' +
+                '<td><button onclick="generarFactura(' + pedido.idPedido + ')">Descargar</button></td>' +
+                '</tr>';
+
+            tbody.append(fila);
+        });
     });
 }
+
 
 $(document).ready(function(){
     $.ajax({
@@ -149,25 +192,6 @@ $(document).ready(function(){
     });
 });
 
-function buscarUsuarioPorAlias(nombre, callback) {
-    $.ajax({
-        url: '/controladorCliente/findbyalias', // URL del endpoint
-        method: 'GET',
-        headers: {
-            'Authorization': 'Bearer ' + token// Opcional: Si necesitas un token para la autenticación
-        },
-        data: {
-            username: nombre // Parámetro a enviar en la solicitud
-        },
-        success: function(response) {
-            callback(response);
-        },
-        error: function(xhr, status, error) {
-            console.error('Error al buscar el usuario:', error);
-            alert('Error al buscar el usuario.');
-        }
-    });
-}
 
 function logout() {
     // Mostrar un mensaje de confirmación al usuario
