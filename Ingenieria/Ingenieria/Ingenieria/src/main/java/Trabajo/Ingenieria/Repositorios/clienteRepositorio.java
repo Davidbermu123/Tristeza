@@ -46,4 +46,7 @@ public class clienteRepositorio {
         clienteCRUD.updateUserByUsername(usernameBusqueda, nombre, apellido, ciudad, direccion, rol, telefono);
     }
     
+    public void borrar(Long id){
+        clienteCRUD.deleteById(id);
+    }
 }

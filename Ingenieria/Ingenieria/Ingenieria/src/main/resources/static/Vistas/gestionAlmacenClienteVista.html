@@ -91,7 +91,7 @@
                                     <div class="col-lg-4 align-self-center">
                                         <div class="main-info header-text">
                                             <span>Online</span>
-                                            <h4 id="username">Loading...</h4>
+                                            <h4 id="usernameDisplay"></h4>
                                             <p>Bienvenido a tu perfil, puedes editar tus datos personales aquí.</p>
                                             <div class="main-border-button">
                                                 <a href="#">Comienza a editar</a>
@@ -112,14 +112,6 @@
                                     <div class="col-lg-12">
                                         <div class="form-update-user">
                                             <h4>Actualiza tu información</h4>
-                                            <!-- Selección del alias -->
-                                            <div class="select-username">
-                                                <label for="usernameSelect">Selecciona un Alias:</label>
-                                                <select id="usernameSelect" class="form-control">
-                                                    <option value="">Selecciona un Alias</option>
-                                                    <!-- Opciones dinámicas de alias se agregarán aquí -->
-                                                </select>
-                                            </div>
                                             <form id="updateProfileForm">
                                                 <div class="form-group">
                                                     <label for="nombre">Nombre:</label>
@@ -141,7 +133,8 @@
                                                     <label for="telefono">Teléfono:</label>
                                                     <input type="text" id="telefono" name="telefono" class="form-control">
                                                 </div>
-                                                <button type="submit" class="btn btn-primary">Actualizar</button>
+                                                <button type="button" class="btn btn-primary" onclick="actualizarPerfil()">Actualizar</button>
+                                                <button type="button" class="btn btn-primary" onclick="borrar()">Eliminar</button>
                                             </form>
                                         </div>
                                     </div>
@@ -158,13 +151,15 @@
     </div>
 
     <!-- Scripts -->
-    <script src="../vendor/jquery/jquery.min.js"></script>
-    <script src="../vendor/bootstrap/js/bootstrap.bundle.min.js"></script>
-    <script src="../assets/js/owl-carousel.js"></script>
-    <script src="../assets/js/animation.js"></script>
-    <script src="../assets/js/imagesloaded.js"></script>
-    <script src="../assets/js/custom.js"></script>
-    <script src="https://unpkg.com/swiper@7/swiper-bundle.min.js"></script>
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.7.1/jquery.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+    <script src="/vendor/jquery/jquery.min.js"></script>
+    <script src="/vendor/bootstrap/js/bootstrap.min.js"></script>
+    <script src="/assets/js/isotope.min.js"></script>
+    <script src="/assets/js/owl-carousel.js"></script>
+    <script src="/assets/js/tabs.js"></script>
+    <script src="/assets/js/popup.js"></script>
+    <script src="/assets/js/custom.js"></script>
 
     <!-- Custom JavaScript for Profile Page -->
     <script src="../Js/profile.js"></script>

@@ -4,6 +4,7 @@ import java.util.List;
 import org.springframework.security.core.Authentication;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.context.SecurityContextHolder;
+import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.PutMapping;
@@ -75,5 +76,10 @@ private clienteServicio usuarioService;
                                             @RequestParam role rol,
                                             @RequestParam String telefono) {
         usuarioService.actualizarUsuarioPorUsername(username, nombre, apellido, ciudad, direccion, rol, telefono);
+    }
+
+    @DeleteMapping("/borrarUsuario")
+    public void borrarUsuarioById(@RequestParam Long id){
+        usuarioService.borrarUsuario(id);
     }
 }

@@ -63,4 +63,8 @@ public class clienteServicio {
             throw new RuntimeException("El usuario con el alias proporcionado no existe: " + usernameBusqueda);
         }
     }
+
+    public void borrarUsuario(Long id){
+        usuarioRepository.borrar(id);
+    }
 }

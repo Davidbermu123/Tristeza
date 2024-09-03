@@ -1,16 +1,15 @@
+window.onload = function(){
+    verificarTokenYRedireccionarALogin();
+    traerUsuario();
+}
+
 let token = localStorage.getItem('token');
 var tokenParts = token.split('.');
 var tokenPayload = JSON.parse(atob(tokenParts[1]));
 var username=tokenPayload.sub;
 
 
-window.onload = function(){
-    verificarTokenYRedireccionarALogin();
-    traerUsuario();
-}
-
 function verificarTokenYRedireccionarALogin() {
-
     // Verificar si el token está presente
     if (token === null) {
         // Si el token no está presente, redirigir al usuario al inicio de sesión
@@ -23,68 +22,89 @@ function verificarTokenYRedireccionarALogin() {
     }
 }
 
-function traerUsuario(){
+
+var rol = "";
+var id = 0;
+function traerUsuario() {
     // Hacer una solicitud al backend para obtener el nombre de usuario
-    fetch('/controladorCliente/obtenerPerfil', {
+    $.ajax({
+        url: '/controladorCliente/obtenerPerfil',
         method: 'GET',
         headers: {
             'Authorization': 'Bearer ' + token
         },
         data: { alias: username},
-    })
-    .then(response => {
-        if (!response.ok) {
-            window.location.href = '/Vistas/inicioVista.html';
-            throw new Error('No autorizado');
+        success: function(username) {
+            rol = username.rol;
+            id = username.id;
+            $('#usernameDisplay').text(username.nombre);
+            $('#nombre').val(username.nombre);
+            $('#apellido').val(username.apellido);
+            $('#ciudad').val(username.ciudad);
+            $('#direccion').val(username.direccion);
+            $('#telefono').val(username.telefono);
+        },
+        error: function(xhr, status, error) {
+            console.error('Error:', error);
         }
-        return response.text();
-    })
-    .then(username => {
-        // Mostrar el nombre de usuario en el HTML
-        console.log(username)
-        usernameDisplay.textContent = username;
-    })
-    .catch(error => {
-        console.error('Error:', error);
-        // Opcional: Mostrar un mensaje de error o realizar otras acciones
     });
 }
 
+// Función que será llamada al presionar el botón de "Actualizar"
+function actualizarPerfil() {
+    const nombre = $('#nombre').val();
+    const apellido = $('#apellido').val();
+    const ciudad = $('#ciudad').val();
+    const direccion = $('#direccion').val();
+    const telefono = $('#telefono').val();
 
-
-
-// Manejador de envío del formulario de actualización
-document.getElementById('updateProfileForm').addEventListener('submit', function(event) {
-    event.preventDefault();
-    const token = localStorage.getItem('token');
-    const username = document.getElementById('usernameSelect').value;
-    const nombre = document.getElementById('nombre').value;
-    const apellido = document.getElementById('apellido').value;
-    const direccion = document.getElementById('direccion').value;
-    const telefono = document.getElementById('telefono').value;
-    const ciudad = document.getElementById('ciudad').value;
-    const rol = document.getElementById('rol').value;
-
-    if (username) {
-        fetch(`/controladorCliente/updateUsuario?username=${encodeURIComponent(username)}&nombre=${encodeURIComponent(nombre)}&apellido=${encodeURIComponent(apellido)}&ciudad=${encodeURIComponent(ciudad)}&direccion=${encodeURIComponent(direccion)}&telefono=${encodeURIComponent(telefono)}&rol=${encodeURIComponent(rol)}`, {
-            method: 'PUT',
-            headers: {
-                'Content-Type': 'application/json',
-            },
-        })
-        .then(response => {
-            if (response.ok) {
-                alert('Perfil actualizado exitosamente.');
-                window.location.reload();  // Recarga la página para mostrar los datos actualizados
-            } else {
-                alert('Error al actualizar el perfil.');
-            }
-        })
-        .catch(error => {
-            console.error('Error:', error);
+    // Realiza la petición AJAX de tipo PUT
+    $.ajax({
+        url: '/controladorCliente/updateUsuario',
+        method: 'PUT',
+        headers: {
+            'Authorization': 'Bearer ' + token,
+            'Content-Type': 'application/x-www-form-urlencoded' // Tipo de contenido para enviar parámetros en la URL
+        },
+        data: {
+            username: username,
+            nombre: nombre,
+            apellido: apellido,
+            ciudad: ciudad,
+            direccion: direccion,
+            rol: rol,
+            telefono: telefono
+        },
+        success: function(response) {
+            alert('Perfil actualizado exitosamente.');
+            window.location.reload();
+        },
+        error: function(xhr, status, error) {
+            console.error('Error al actualizar el perfil:', error);
             alert('Error al actualizar el perfil.');
-        });
-    } else {
-        alert('Debe seleccionar un alias.');
-    }
-});
+        }
+    });
+}
+
+function borrar(){
+    $.ajax({
+        url: '/controladorCliente/borrarUsuario',
+        method: 'DELETE',
+        headers: {
+            'Authorization': 'Bearer ' + token,
+            'Content-Type': 'application/x-www-form-urlencoded' // Tipo de contenido para enviar parámetros en la URL
+        },
+        data: {
+            id: id
+        },
+        success: function(response) {
+            alert('Perfil borrado exitosamente.');
+            localStorage.clear();
+            window.location.reload();
+        },
+        error: function(xhr, status, error) {
+            console.error('Error al actualizar el perfil:', error);
+            alert('Error al borrar el perfil.');
+        }
+    });
+}
