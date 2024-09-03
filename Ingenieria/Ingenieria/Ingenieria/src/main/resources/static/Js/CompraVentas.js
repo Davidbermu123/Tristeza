@@ -27,16 +27,17 @@ $(document).ready(function () {
                         x: new Date(item.fecha),
                         y: item.cantidad
                     })),
-                    backgroundColor: 'rgba(255, 99, 132, 0.5)',
-                    borderColor: 'rgba(255, 99, 132, 1)',
+                    backgroundColor: 'rgba(54, 162, 235, 0.2)', // Fondo de los puntos
+                    borderColor: 'rgba(54, 162, 235, 1)',        // Borde de los puntos
                     pointRadius: 5,
                     pointHoverRadius: 7,
-                    showLine: true, // Mostrar la línea entre puntos
-                    fill: false, // Evita que el área bajo la línea se rellene
+                    showLine: true,
+                    fill: true,                                  // Para que el área bajo la línea tenga color
                     tension: 0.1
                 }]
             },
             options: {
+                responsive: true,
                 scales: {
                     x: {
                         type: 'time',
@@ -48,32 +49,60 @@ $(document).ready(function () {
                         },
                         title: {
                             display: true,
-                            text: 'Fecha'
+                            text: 'Fecha',
+                            color: '#333'                        // Color del texto del título del eje X
+                        },
+                        grid: {
+                            color: 'rgba(200, 200, 200, 0.3)'    // Color de la cuadrícula
+                        },
+                        ticks: {
+                            color: '#333'                        // Color de las etiquetas
                         }
                     },
                     y: {
                         beginAtZero: true,
                         title: {
                             display: true,
-                            text: 'Cantidad'
+                            text: 'Cantidad',
+                            color: '#333'                        // Color del texto del título del eje Y
+                        },
+                        grid: {
+                            color: 'rgba(200, 200, 200, 0.3)'    // Color de la cuadrícula
+                        },
+                        ticks: {
+                            color: '#333'                        // Color de las etiquetas
                         }
                     }
                 },
                 plugins: {
                     tooltip: {
+                        backgroundColor: 'rgba(255, 255, 255, 0.8)',
+                        titleColor: '#333',
+                        bodyColor: '#333',
+                        borderColor: 'rgba(54, 162, 235, 1)',
+                        borderWidth: 1,
                         callbacks: {
-                            label: function(context) {
+                            label: function (context) {
                                 return `Fecha: ${context.raw.x.toISOString().split('T')[0]}, Ventas: ${context.raw.y}`;
                             }
                         }
+                    },
+                    legend: {
+                        display: true,
+                        labels: {
+                            color: '#333'                        // Color de las etiquetas de la leyenda
+                        }
                     }
+                },
+                layout: {
+                    backgroundColor: '#fff'                     // Color de fondo del gráfico
                 }
             }
         });
     }
 
     function cargarGraficoComprasSemanal(data) {
-        destruirGrafico(); // Destruir el gráfico existente antes de crear uno nuevo
+        destruirGrafico();
         mostrarGrafico('#grafico-compras-semanal');
         var ctx = document.getElementById('grafico-compras-semanal').getContext('2d');
         currentChart = new Chart(ctx, {
@@ -85,16 +114,17 @@ $(document).ready(function () {
                         x: new Date(item.fecha),
                         y: item.cantidad
                     })),
-                    backgroundColor: 'rgba(75, 192, 192, 0.5)',
-                    borderColor: 'rgba(75, 192, 192, 1)',
+                    backgroundColor: 'rgba(75, 192, 192, 0.2)', // Fondo de los puntos
+                    borderColor: 'rgba(75, 192, 192, 1)',        // Borde de los puntos
                     pointRadius: 5,
                     pointHoverRadius: 7,
-                    showLine: true, // Mostrar la línea entre puntos
-                    fill: false, // Evita que el área bajo la línea se rellene
+                    showLine: true,
+                    fill: true,                                  // Para que el área bajo la línea tenga color
                     tension: 0.1
                 }]
             },
             options: {
+                responsive: true,
                 scales: {
                     x: {
                         type: 'time',
@@ -106,25 +136,53 @@ $(document).ready(function () {
                         },
                         title: {
                             display: true,
-                            text: 'Fecha'
+                            text: 'Fecha',
+                            color: '#333'                        // Color del texto del título del eje X
+                        },
+                        grid: {
+                            color: 'rgba(200, 200, 200, 0.3)'    // Color de la cuadrícula
+                        },
+                        ticks: {
+                            color: '#333'                        // Color de las etiquetas
                         }
                     },
                     y: {
                         beginAtZero: true,
                         title: {
                             display: true,
-                            text: 'Cantidad'
+                            text: 'Cantidad',
+                            color: '#333'                        // Color del texto del título del eje Y
+                        },
+                        grid: {
+                            color: 'rgba(200, 200, 200, 0.3)'    // Color de la cuadrícula
+                        },
+                        ticks: {
+                            color: '#333'                        // Color de las etiquetas
                         }
                     }
                 },
                 plugins: {
                     tooltip: {
+                        backgroundColor: 'rgba(255, 255, 255, 0.8)',
+                        titleColor: '#333',
+                        bodyColor: '#333',
+                        borderColor: 'rgba(75, 192, 192, 1)',
+                        borderWidth: 1,
                         callbacks: {
-                            label: function(context) {
+                            label: function (context) {
                                 return `Fecha: ${context.raw.x.toISOString().split('T')[0]}, Compras: ${context.raw.y}`;
                             }
                         }
+                    },
+                    legend: {
+                        display: true,
+                        labels: {
+                            color: '#333'                        // Color de las etiquetas de la leyenda
+                        }
                     }
+                },
+                layout: {
+                    backgroundColor: '#fff'                     // Color de fondo del gráfico
                 }
             }
         });
@@ -134,10 +192,10 @@ $(document).ready(function () {
         var hoy = new Date();
         var inicioSemana = new Date(hoy);
         inicioSemana.setDate(hoy.getDate() - hoy.getDay());
-        
+
         var finSemana = new Date(hoy);
         finSemana.setDate(inicioSemana.getDate() + 6);
-        
+
         $.ajax({
             url: '/graficos/ventas-semanal',
             method: 'GET',
@@ -158,10 +216,10 @@ $(document).ready(function () {
         var hoy = new Date();
         var inicioSemana = new Date(hoy);
         inicioSemana.setDate(hoy.getDate() - hoy.getDay());
-        
+
         var finSemana = new Date(hoy);
         finSemana.setDate(inicioSemana.getDate() + 6);
-        
+
         $.ajax({
             url: '/graficos/compras-semanal',
             method: 'GET',
@@ -178,9 +236,10 @@ $(document).ready(function () {
         });
     }
 
-    cargarVentasSemanal();  // Carga inicial de ventas
-    $('#btn-ventas').click(cargarVentasSemanal);
-    $('#btn-compras').click(cargarComprasSemanal);
+    // Inicializa la carga de gráficos
+    $('#btn-ventas').on('click', cargarVentasSemanal);
+    $('#btn-compras').on('click', cargarComprasSemanal);
+    cargarComprasSemanal(); // Carga las compras por defecto
 
     function verificarTokenYRedireccionarALogin() {
         let token = localStorage.getItem('token');
@@ -199,3 +258,4 @@ $(document).ready(function () {
 
     verificarTokenYRedireccionarALogin();  // Añadido para ejecutar la verificación del token en la carga de la página
 });
+

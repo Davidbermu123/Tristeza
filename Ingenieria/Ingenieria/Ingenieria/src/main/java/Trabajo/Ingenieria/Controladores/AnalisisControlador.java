@@ -27,12 +27,9 @@ public class AnalisisControlador {
 
     @GetMapping("/compras-semanal")
     public List<Map<String, Object>> obtenerComprasDiarias(@RequestParam("inicio") String inicio, @RequestParam("fin") String fin) {
-        // Obtener el nombre de usuario autenticado
         Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
         String username = authentication.getName();
-
-       
-        // Aquí podrías usar el username para realizar más validaciones si es necesario 
+        
         List<registroInventarioEntidad> comprasDiarias = comprasService.obtenerComprasPorFecha(inicio, fin);
         List<Map<String, Object>> comprasPorFecha = new ArrayList<>();
 
@@ -45,17 +42,41 @@ public class AnalisisControlador {
 
         return comprasPorFecha;
     }
-    
+
+    @GetMapping("/ventas-semanal")
+        public List<Map<String, Object>> obtenerVentasDiarias(@RequestParam("inicio") String inicio, @RequestParam("fin") String fin) {
+            Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
+            String username = authentication.getName();
+
+            List<registroInventarioEntidad> comprasDiarias = comprasService.obtenerComprasPorFecha(inicio, fin);
+            List<Map<String, Object>> ventasPorFecha = new ArrayList<>();
+
+    for (registroInventarioEntidad compra : comprasDiarias) {
+        int cantidadTotal = compra.getProductos().values().stream().mapToInt(p -> p.getCantidad()).sum();
+        int mitadCantidad = cantidadTotal / 2;
+        int cantidadDiaSiguiente = cantidadTotal - mitadCantidad;
+
+        Map<String, Object> ventaDia = new HashMap<>();
+        ventaDia.put("fecha", compra.getFechaEntrada().toString());
+        ventaDia.put("cantidad", mitadCantidad);
+        ventasPorFecha.add(ventaDia);
+
+        Map<String, Object> ventaDiaSiguiente = new HashMap<>();
+        ventaDiaSiguiente.put("fecha", compra.getFechaEntrada().plusDays(1).toString());
+        ventaDiaSiguiente.put("cantidad", cantidadDiaSiguiente);
+        ventasPorFecha.add(ventaDiaSiguiente);
+    }
+
+    return ventasPorFecha;
+}
+
     @GetMapping("/rol")
     public String obtenerRolPorUsuario() {
-        // Obtener el nombre de usuario del objeto Authentication
         Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
         String username = authentication.getName();
 
-        // Buscar el usuario en el servicio Usuario_modelos
         usuario user = usuarioService.findByUsername(username);
 
-        // Verificar si el usuario existe y devolver su rol
         if (user != null) {
             return user.getRol().toString();
         } else {
