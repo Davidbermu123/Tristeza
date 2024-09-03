@@ -17,7 +17,6 @@ import lombok.RequiredArgsConstructor;
 public class configuracionSeguridad {
     private final jwtFiltroAutenticacion jwtAuthenticationFilter;
     private final AuthenticationProvider authProvider;
-  private final String[] whitelist={"/auth/**","/graficos/**","/pedidos/**","/requestFichasStock/**","/clienteControlador/**","/Css/**","/assets/**","/Vistas/**","/Js/**","/Imagenes/**","/vendor/**",
   private final String[] whitelist={"/auth/**","/pedidos/**","/graficos/**","/requestFichasStock/**","/clienteControlador/**","/Css/**","/assets/**","/Vistas/**","/Js/**","/Imagenes/**","/vendor/**",
   "index.html"};
     @Bean
