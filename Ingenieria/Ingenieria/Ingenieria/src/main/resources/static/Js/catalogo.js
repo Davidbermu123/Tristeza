@@ -1,3 +1,4 @@
+let token = localStorage.getItem('token');
 function verificarTokenYRedireccionarALogin() {
 
     // Verificar si el token está presente
@@ -64,3 +65,26 @@ function mostrar_todos() {
         }
     });
 }
+$(document).ready(function() {
+    $.ajax({
+        url: "/requestFichasStock/getFichasStock",
+        type: "GET",
+        success: function(data) {
+            data.forEach(function(item) {
+                const productoHtml = `
+                    <div class="producto">
+                        <img src="${item.imagenItem}" alt="${item.nombreItem}" />
+                        <h3>${item.nombreItem}</h3>
+                        <p>Stock: ${item.stockItem}</p>
+                        <p>Precio: $${item.precioItem.toFixed(2)}</p>
+                    </div>
+                `;
+                $("#productosContainer").append(productoHtml);
+            });
+        },
+        error: function(error) {
+            console.error("Error al obtener los productos:", error);
+        }
+    });
+});
+

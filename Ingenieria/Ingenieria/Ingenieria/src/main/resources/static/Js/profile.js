@@ -1,83 +1,57 @@
-// Asume que tienes un API que proporciona los datos de los usuarios
-document.addEventListener('DOMContentLoaded', function() {
-    const token = localStorage.getItem('token');
-    const usernameSelect = document.getElementById('usernameSelect');
-    const usernameDisplay = document.getElementById('usernameDisplay');
+let token = localStorage.getItem('token');
+var tokenParts = token.split('.');
+var tokenPayload = JSON.parse(atob(tokenParts[1]));
+var username=tokenPayload.sub;
 
-    function verificarTokenYMostrarNombre() {
-        if (token === null) {
-            window.location.href = '/Vistas/inicioVista.html';
-        } else {
-            // Hacer una solicitud al backend para obtener el nombre de usuario
-            fetch('/api/username', {
-                method: 'GET',
-                headers: {
-                    'Authorization': 'Bearer ' + token
-                }
-            })
-            .then(response => {
-                if (!response.ok) {
-                    window.location.href = '/Vistas/inicioVista.html';
-                    throw new Error('No autorizado');
-                }
-                return response.text();
-            })
-            .then(username => {
-                // Mostrar el nombre de usuario en el HTML
-                usernameDisplay.textContent = username;
-            })
-            .catch(error => {
-                console.error('Error:', error);
-                // Opcional: Mostrar un mensaje de error o realizar otras acciones
-            });
-        }
+
+window.onload = function(){
+    verificarTokenYRedireccionarALogin();
+    traerUsuario();
+}
+
+function verificarTokenYRedireccionarALogin() {
+
+    // Verificar si el token está presente
+    if (token === null) {
+        // Si el token no está presente, redirigir al usuario al inicio de sesión
+        window.location.href = '/Vistas/inicioVista.html';
+    } else {
+        var tokenParts = token.split('.');
+        var tokenPayload = JSON.parse(atob(tokenParts[1]));
+        var username=tokenPayload.sub;
+        console.log(username);
     }
-    verificarTokenYMostrarNombre();
+}
 
-    // Cargar usuarios para el select
-    fetch('/controladorCliente/getAllUsuarios', {
+function traerUsuario(){
+    // Hacer una solicitud al backend para obtener el nombre de usuario
+    fetch('/controladorCliente/obtenerPerfil', {
         method: 'GET',
         headers: {
-            'Content-Type': 'application/json',
+            'Authorization': 'Bearer ' + token
         },
+        data: { alias: username},
     })
-    .then(response => response.json())
-    .then(data => {
-        data.forEach(user => {
-            let option = document.createElement('option');
-            option.value = user.username;
-            option.textContent = user.username;
-            usernameSelect.appendChild(option);
-        });
+    .then(response => {
+        if (!response.ok) {
+            window.location.href = '/Vistas/inicioVista.html';
+            throw new Error('No autorizado');
+        }
+        return response.text();
+    })
+    .then(username => {
+        // Mostrar el nombre de usuario en el HTML
+        console.log(username)
+        usernameDisplay.textContent = username;
     })
     .catch(error => {
-        console.error('Error al cargar usuarios:', error);
+        console.error('Error:', error);
+        // Opcional: Mostrar un mensaje de error o realizar otras acciones
     });
+}
 
-    usernameSelect.addEventListener('change', function() {
-        const selectedUsername = this.value;
 
-        if (selectedUsername) {
-            fetch(`/controladorCliente/getUsuario?username=${encodeURIComponent(selectedUsername)}`, {
-                method: 'GET',
-                headers: {
-                    'Content-Type': 'application/json',
-                },
-            })
-            .then(response => response.json())
-            .then(user => {
-                document.getElementById('nombre').value = user.nombre;
-                document.getElementById('apellido').value = user.apellido;
-                document.getElementById('ciudad').value = user.ciudad;
-                document.getElementById('direccion').value = user.direccion;
-                document.getElementById('telefono').value = user.telefono;
-            })
-            .catch(error => {
-                console.error('Error al cargar usuario:', error);
-            });
-        }
-    });
-});
+
 
 // Manejador de envío del formulario de actualización
 document.getElementById('updateProfileForm').addEventListener('submit', function(event) {

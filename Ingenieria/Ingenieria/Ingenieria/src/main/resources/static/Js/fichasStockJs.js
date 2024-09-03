@@ -15,14 +15,6 @@ function verificarTokenYRedireccionarALogin() {
 }
 
 verificarTokenYRedireccionarALogin();
-mostrar_todos();
-
-
-document.addEventListener('DOMContentLoaded', function () {
-    verificarTokenYRedireccionarALogin();
-    mostrar_todos();
-});
-
 
 function filterItems() {
     const precioFiltro = document.getElementById('precio').value;
