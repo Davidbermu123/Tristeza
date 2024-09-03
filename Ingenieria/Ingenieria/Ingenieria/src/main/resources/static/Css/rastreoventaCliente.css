@@ -1,160 +1,109 @@
-/* Estilos de los pasos */
-.tracking-container {
-    text-align: center;
-    margin: 20px auto;
-    max-width: 600px;
-}
-
-.tracking-steps {
+/* Estilo general del contenedor de tarjetas */
+.order-container {
     display: flex;
-    justify-content: space-between;
-    align-items: center;
-    position: relative;
-    padding: 10px;
+    flex-wrap: wrap; /* Permite que las tarjetas se envuelvan a la siguiente línea si no caben en una sola línea */
+    justify-content: center; /* Centra las tarjetas horizontalmente */
+    gap: 20px; /* Espacio entre tarjetas */
+    padding: 20px; /* Espacio alrededor del contenedor */
 }
 
-.step {
-    flex: 1;
-    position: relative;
-    text-align: center; /* Asegura que todo esté centrado */
+/* Estilo de las tarjetas de pedido */
+.order-card {
+    background-color: #333;
+    color: #fff;
+    border-radius: 8px;
+    padding: 20px;
+    width: 100%; /* Se ajusta al tamaño de la columna */
+    max-width: 90%; /* Limita el ancho máximo de la tarjeta */
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.2);
+    position: relative; /* Para colocar el ícono en la parte derecha */
 }
 
-.step .icon-circle {
-    width: 60px;
-    height: 60px;
-    margin: 0 auto;
-    background-color: #e0e0e0;
-    border-radius: 50%;
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    border: 4px solid transparent; /* Borde transparente por defecto */
+/* Estilo del ícono del estado */
+.order-card .status-icon {
+    position: absolute;
+    top: 20px;
+    right: 20px;
+    font-size: 36px; /* Aumenta el tamaño del ícono */
 }
 
-.step.active .icon-circle {
-    border-color: #4caf50; /* Borde verde cuando está activo */
-    background-color: #4caf50; /* Fondo verde cuando está activo */
-}
-
-.connector {
-    flex: 1;
-    height: 4px;
-    background-color: #e0e0e0;
-    margin: 0 -4px; /* Ajustar para conectar las líneas correctamente */
-    transition: background-color 0.3s ease-in-out; /* Transición suave */
-}
-
-.connector.active {
-    background-color: #4caf50; /* Verde cuando el paso siguiente está activo */
-}
-
-.step p {
-    margin-top: 10px;
-    font-size: 14px;
-    color: #ffffff;
-}
-
-.step img {
-    transition: filter 0.3s ease-in-out;
-}
-
-.step.highlight img {
-    filter: grayscale(0%); /* Asegura que el icono esté a color */
-}
-
-.step.highlight p {
-    color: green;
-    font-weight: bold;
-}
-
-/* Estilos para el nuevo estado */
-.status-aceptado {
-    color: #4caf50; /* Color verde para el estado aceptado */
-}
-
-.step.active .icon-circle.aceptado {
-    background-color: #4caf50; /* Fondo verde cuando está activo */
-    border-color: #4caf50; /* Borde verde cuando está activo */
-}
-
-#status-log {
-    margin-top: 20px;
-    padding: 10px;
-    background-color: black;
-    border: 1px solid black;
-    border-radius: 5px;
-}
-
-#status-log h3 {
+/* Estilo para el título dentro de la tarjeta */
+.order-card h3 {
     margin-top: 0;
+    font-size: 1.8rem; /* Tamaño de fuente del título */
 }
 
-#log-list {
-    list-style-type: none;
-    padding: 0;
-}
-
-#log-list li {
-    padding: 5px 0;
-    border-bottom: 1px solid #ddd;
-}
-.step.active .icon-circle {
-    border-color: #4caf50; /* Borde verde cuando está activo */
-    background-color: #4caf50; /* Fondo verde cuando está activo */
-}
-
-.connector.active {
-    background-color: #4caf50; /* Verde cuando el paso siguiente está activo */
-}
-
-.step.active.highlight img {
-    filter: grayscale(0%); /* Icono en color */
-}
-
-.step.active.highlight p {
-    color: #4caf50;
+/* Estilo para el estado dentro de la tarjeta */
+.order-card .status {
     font-weight: bold;
-}
-.step .icon-circle {
-    width: 60px;
-    height: 60px;
-    margin: 0 auto;
-    background-color: #e0e0e0;
-    border-radius: 50%;
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    border: 4px solid transparent;
+    font-size: 1.2rem; /* Tamaño de fuente del estado */
+    color: #4caf50; /* Color para estado completado */
 }
 
-.step.active .icon-circle {
-    border-color: #4caf50; /* Borde verde cuando está activo */
-    background-color: #4caf50; /* Fondo verde cuando está activo */
+.order-card .status.aceptado {
+    color: #4caf50; /* Color para estado aceptado */
 }
 
-.step.highlight img {
-    filter: grayscale(0%);
+.order-card .status.en-camino {
+    color: #2196f3; /* Color para estado en camino */
 }
 
-.step.highlight p {
-    color: green;
+.order-card .status.entregado {
+    color: #f44336; /* Color para estado entregado */
+}
+
+.order-card .status.alistando {
+    color: #ffeb3b; /* Color para estado alistando */
+}
+
+/* Estilo para los detalles dentro de la tarjeta */
+.order-card .details {
+    margin-top: 10px;
+    font-size: 1rem; /* Tamaño de fuente de los detalles */
+}
+
+.order-card .details p {
+    color: #b0b0b0; /* Color gris claro para la información */
+}
+
+.order-card .details span {
     font-weight: bold;
 }
 
-.connector {
-    flex: 1;
-    height: 4px;
-    background-color: #e0e0e0;
-    margin: 0 -4px;
-    transition: background-color 0.3s ease-in-out;
+/* Estilos para los íconos según el estado */
+.icon-aceptado::before {
+    content: '\f00c'; /* Check icon */
+    font-family: 'FontAwesome';
+    color: #4caf50; /* Color para estado aceptado */
 }
 
-.connector.active {
-    background-color: #4caf50;
+.icon-en-camino::before {
+    content: '\f0d1'; /* Truck icon */
+    font-family: 'FontAwesome';
+    color: #2196f3; /* Color para estado en camino */
 }
 
-.highlight {
-    border: 2px solid green; /* Ajusta el grosor y color del borde según tu diseño */
-    padding: 5px; /* Ajusta el padding para que se ajuste a tu diseño */
-    border-radius: 50%; /* Hace que el borde sea circular */
+.icon-entregado::before {
+    content: '\f1d8'; /* Package icon */
+    font-family: 'FontAwesome';
+    color: #f44336; /* Color para estado entregado */
+}
+
+.icon-alistando::before {
+    content: '\f017'; /* Icono de reloj o cualquier otro ícono representativo */
+    font-family: 'FontAwesome';
+    color: #ffeb3b; /* Color para estado alistando */
+}
+
+.header-text {
+    margin-bottom: 30px; /* Espacio debajo del título */
+}
+
+.section-title {
+    font-size: 2.5rem; /* Tamaño del título */
+    font-weight: 700;
+    color: #d8d1d1;
+    margin-bottom: 20px; /* Espacio debajo del título */
+    border-bottom: 2px solid #007bff; /* Línea de separación debajo del título */
+    padding-bottom: 10px; /* Espacio entre el texto y la línea */
 }

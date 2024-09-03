@@ -48,9 +48,14 @@ public class PedidoControlador {
     }
 
     @GetMapping("/pedidoUsuario/{username}")
-    public List<Pedido> getPedidosByUsername(@PathVariable String username) {
-        return pedidoService.getPedidosByUsername(username);
+    public ResponseEntity<List<Pedido>> getPedidosByUsername(@PathVariable String username) {
+        List<Pedido> pedidos = pedidoService.getPedidosByUsername(username);
+        if (pedidos.isEmpty()) {
+            return ResponseEntity.status(HttpStatus.NOT_FOUND).body(null);
+        }
+        return ResponseEntity.ok(pedidos);
     }
+
 
     @GetMapping("/pedidoId/{Id}")
     public Optional<Pedido> findById(@PathVariable Long Id) {

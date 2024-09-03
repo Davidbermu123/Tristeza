@@ -26,6 +26,22 @@ function verificarTokenYRedireccionarALogin() {
 }
 verificarTokenYRedireccionarALogin(); 
 
+// Función para obtener la dirección del usuario dado su username
+function obtenerDireccion(username) {
+    verificarTokenYRedireccionarALogin(); 
+    return $.ajax({
+        url: '/controladorCliente/findbyalias',
+        method: 'GET',
+        data: { username: username },
+        dataType: 'json' // Especificar que esperamos una respuesta en formato JSON
+    }).done(function(usuario) {
+        return usuario; // Devolver el objeto usuario
+    }).fail(function(xhr, status, error) {
+        console.error('Error al obtener la dirección del usuario:', error);
+        return null; // Devolver null en caso de error
+    });
+}
+
 function changeStatus(element, idPedido) {
     verificarTokenYRedireccionarALogin(); 
     let selectedStatus = element.value;
@@ -36,22 +52,21 @@ function changeStatus(element, idPedido) {
         method: 'PUT',
         data: { nuevoEstado: selectedStatus },
         success: function(response) {
-            console.log(response);
-            alert("Estado actualizado a: " + selectedStatus);
+            Swal.fire({
+                icon: 'success',
+                title: 'Estado actualizado',
+                text: "El estado se ha actualizado a " + selectedStatus
+            });
         },
         error: function(xhr, status, error) {
             console.error('Error al actualizar el estado:', error);
-            alert("Hubo un error al actualizar el estado. Por favor, intenta nuevamente.");
+            Swal.fire({
+                icon: "error",
+                title: "Oops...",
+                text: "El estado no se actualizo nuevamente",
+                footer: '<a href="#">Why do I have this issue?</a>'
+              });
         }
-    });
-}
-
-// Función para obtener la dirección del usuario dado su username
-function obtenerDireccion(username) {
-    return $.ajax({
-        url: '/controladorCliente/findbyalias',
-        method: 'GET',
-        data: { username: username }
     });
 }
 
@@ -61,50 +76,30 @@ function llenarTabla(pedidos) {
     tbody.empty();
 
     pedidos.forEach(function(pedido) {
-        // Obtén la dirección del usuario para este pedido
-        obtenerDireccion(pedido.username).done(function(usuario) {
-            var fila = '<tr>' +
-                '<td>' +
-                '<select onchange="changeStatus(this, ' + pedido.idPedido + ')">' +
-                    '<option value="Aceptado por la compañia"' + (pedido.estado === 'Aceptado por la compañia' ? ' selected' : '') + '>Aceptado por la compañia</option>' +
-                    '<option value="Alistando"' + (pedido.estado === 'Alistando' ? ' selected' : '') + '>Alistando</option>' +
-                    '<option value="En camino"' + (pedido.estado === 'En camino' ? ' selected' : '') + '>En camino</option>' +
-                    '<option value="Entregado"' + (pedido.estado === 'Entregado' ? ' selected' : '') + '>Entregado</option>' +
-                '</select>' +
-                '</td>' +
-                '<td>' + pedido.idPedido + '</td>' +
-                '<td>' + pedido.nombreProducto + '</td>' +
-                '<td>' + pedido.cantidadPedido + '</td>' +
-                '<td>' + pedido.precioFinal + '</td>' +
-                '<td>' + pedido.username + '</td>' +
-                '<td>' + (usuario ? usuario.direccion : 'No disponible') + '</td>' +  // Muestra la dirección
-                '</tr>';
+        x = obtenerDireccion(pedido.username);
+        console.log(x);
+        d = x.direccion;
+        console.log(d);
+        var fila = '<tr>' +
+            '<td>' +
+            '<select onchange="changeStatus(this, ' + pedido.idPedido + ')">' +
+                '<option value="Aceptado por la compañia"' + (pedido.estado === 'Aceptado por la compañia' ? ' selected' : '') + '>Aceptado por la compañia</option>' +
+                '<option value="Alistando"' + (pedido.estado === 'Alistando' ? ' selected' : '') + '>Alistando</option>' +
+                '<option value="En camino"' + (pedido.estado === 'En camino' ? ' selected' : '') + '>En camino</option>' +
+                '<option value="Entregado"' + (pedido.estado === 'Entregado' ? ' selected' : '') + '>Entregado</option>' +
+            '</select>' +
+            '</td>' +
+            '<td>' + pedido.idPedido + '</td>' +
+            '<td>' + pedido.nombreProducto + '</td>' +
+            '<td>' + pedido.cantidadPedido + '</td>' +
+            '<td>' + pedido.precioFinal + '</td>' +
+            '<td>' + pedido.username + '</td>' +
+            '</tr>';
 
-            tbody.append(fila);
-        }).fail(function(xhr, status, error) {
-            console.error('Error al obtener la dirección del usuario:', error);
-            // Añade una fila con "Dirección no disponible" si hay un error
-            var fila = '<tr>' +
-                '<td>' +
-                '<select onchange="changeStatus(this, ' + pedido.idPedido + ')">' +
-                    '<option value="Aceptado por la compañia"' + (pedido.estado === 'Aceptado por la compañia' ? ' selected' : '') + '>Aceptado por la compañia</option>' +
-                    '<option value="Alistando"' + (pedido.estado === 'Alistando' ? ' selected' : '') + '>Alistando</option>' +
-                    '<option value="En camino"' + (pedido.estado === 'En camino' ? ' selected' : '') + '>En camino</option>' +
-                    '<option value="Entregado"' + (pedido.estado === 'Entregado' ? ' selected' : '') + '>Entregado</option>' +
-                '</select>' +
-                '</td>' +
-                '<td>' + pedido.idPedido + '</td>' +
-                '<td>' + pedido.nombreProducto + '</td>' +
-                '<td>' + pedido.cantidadPedido + '</td>' +
-                '<td>' + pedido.precioFinal + '</td>' +
-                '<td>' + pedido.username + '</td>' +
-                '<td>No disponible</td>' +  // Muestra "No disponible" en caso de error
-                '</tr>';
-
-            tbody.append(fila);
-        });
+        tbody.append(fila);
     });
 }
+
 
 $(document).ready(function(){
     $.ajax({
@@ -119,6 +114,23 @@ $(document).ready(function(){
         }
     });
 });
+
+// Función para obtener la dirección del usuario dado su username
+function obtenerDireccion(username) {
+    return $.ajax({
+        url: '/controladorCliente/findbyalias',
+        method: 'GET',
+        data: { username: username },
+        dataType: 'json' // Especificar que esperamos una respuesta en formato JSON
+    }).done(function(usuario) {
+        return usuario; // Devolver el objeto usuario
+    }).fail(function(xhr, status, error) {
+        console.error('Error al obtener la dirección del usuario:', error);
+        return null; // Devolver null en caso de error
+    });
+}
+
+
 
 function logout() {
     // Mostrar un mensaje de confirmación al usuario
