@@ -15,6 +15,7 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
 import Trabajo.Ingenieria.Entidades.Pedido;
@@ -56,10 +57,14 @@ public class PedidoControlador {
         return pedidoService.findById(Id);
     }
 
-    @PutMapping("/actualizarEstado")
-    public Pedido actualizarEstadoPedido(@RequestBody Map<String, Object> payload) {
-        Long idPedido = ((Number) payload.get("id")).longValue();
-        String nuevoEstado = (String) payload.get("estado");
-        return pedidoService.actualizarEstadoPedido(idPedido, nuevoEstado);
+    @PutMapping("/actualizarEstado/{idPedido}")
+    public ResponseEntity<String> actualizarEstado(@PathVariable Long idPedido, @RequestParam String nuevoEstado) {
+        try {
+            pedidoService.actualizarEstadoPedido(idPedido, nuevoEstado);
+            return ResponseEntity.ok("Estado actualizado exitosamente");
+        } catch (Exception e) {
+            return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body("Error al actualizar el estado");
+        }
     }
+    
 }

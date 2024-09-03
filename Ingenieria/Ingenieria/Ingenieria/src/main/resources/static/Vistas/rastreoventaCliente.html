@@ -4,22 +4,15 @@
 <head>
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
-
-    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@100;200;300;400;500;600;700;800;900&display=swap" rel="stylesheet">
-    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.7.1/jquery.min.js"></script>
-
-    <!-- Bootstrap core CSS -->
-    <link href="../vendor/bootstrap/css/bootstrap.min.css" rel="stylesheet">
-
     <title>Rastrea tu pedido</title>
-    <!-- Additional CSS Files -->
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@100;200;300;400;500;600;700;800;900&display=swap" rel="stylesheet">
+    <link href="../vendor/bootstrap/css/bootstrap.min.css" rel="stylesheet">
     <link rel="stylesheet" href="../assets/css/fontawesome.css">
     <link rel="stylesheet" href="../assets/css/templatemo-cyborg-gaming.css">
     <link rel="stylesheet" href="../assets/css/owl.css">
     <link rel="stylesheet" href="../assets/css/animate.css">
-    <link rel="stylesheet" href="../assets/css/animate.css">
     <link rel="stylesheet" href="../Css/rastreoventaCliente.css">
-    <link rel="stylesheet"href="https://unpkg.com/swiper@7/swiper-bundle.min.css"/>
+    <link rel="stylesheet" href="https://unpkg.com/swiper@7/swiper-bundle.min.css"/>
 </head>
 
 <body>
@@ -79,7 +72,6 @@
     <div class="row">
       <div class="col-lg-12">
         <div class="page-content">
-
           <!-- ** Banner Start ** -->
           <div class="tracking-steps">
             <div class="step" id="step-aceptado">
@@ -109,33 +101,11 @@
                 </div>
                 <p>Entregado</p>
             </div>
-            <div id="status-log">
-                <h3>Registro de cambios de estado</h3>
-                <ul id="log-list"></ul> <!-- Aquí se añadirán los logs -->
+            <!-- ** Registro de actualizaciones ** -->
+            <div id="update-log" class="update-log">
+                <!-- Los registros se agregarán aquí por JavaScript -->
             </div>
-        </div>
-        <div class="container">
-          <div class="row">
-            <div class="col-lg-12">
-              <div id="order-details">
-                <h2>Detalles de tu pedido</h2>
-                <table id="orders-table" class="table">
-                  <thead>
-                    <tr>
-                      <th>ID</th>
-                      <th>Nombre del Producto</th>
-                      <th>Cantidad</th>
-                      <th>Estado</th>
-                    </tr>
-                  </thead>
-                  <tbody>
-                    <!-- Los detalles de los pedidos se agregarán aquí -->
-                  </tbody>
-                </table>
-              </div>
-            </div>
-          </div>
-        </div>              
+          </div>        
         </div>
       </div>
     </div>
@@ -146,32 +116,17 @@
       <div class="row">
         <div class="col-lg-12">
           <p>Copyright © 2024 <a href="#">Modelo de inventario</a> Company. All rights reserved. 
-          
           <br>Design: <a target="_blank" title="free CSS templates">su nombre aqui</a></p>
         </div>
       </div>
     </div>
   </footer>
 
-
   <!-- Scripts -->
-  <!-- Bootstrap core JavaScript -->
   <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.7.1/jquery.min.js"></script>
-  <script src="../vendor/jquery/jquery.min.js"></script>
   <script src="../vendor/bootstrap/js/bootstrap.min.js"></script>
-
-  <script src="../assets/js/isotope.min.js"></script>
-  <script src="../assets/js/owl-carousel.js"></script>
-  <script src="../assets/js/tabs.js"></script>
-  <script src="../assets/js/popup.js"></script>
   <script src="../assets/js/custom.js"></script>
-  <script src="../Js/rastreoventaCliente.js"></script>
-
-    <!-- Scripts -->
-    <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"></script>
-    <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.5.2/dist/umd/popper.min.js"></script>
-    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
-    <script src="../Js/rastreoventaCliente.js"></script>
+  <script src="../Js/cliente.js"></script>
 </body>
 
 </html>

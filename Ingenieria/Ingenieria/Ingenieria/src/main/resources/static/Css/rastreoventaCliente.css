@@ -98,3 +98,63 @@
     padding: 5px 0;
     border-bottom: 1px solid #ddd;
 }
+.step.active .icon-circle {
+    border-color: #4caf50; /* Borde verde cuando está activo */
+    background-color: #4caf50; /* Fondo verde cuando está activo */
+}
+
+.connector.active {
+    background-color: #4caf50; /* Verde cuando el paso siguiente está activo */
+}
+
+.step.active.highlight img {
+    filter: grayscale(0%); /* Icono en color */
+}
+
+.step.active.highlight p {
+    color: #4caf50;
+    font-weight: bold;
+}
+.step .icon-circle {
+    width: 60px;
+    height: 60px;
+    margin: 0 auto;
+    background-color: #e0e0e0;
+    border-radius: 50%;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    border: 4px solid transparent;
+}
+
+.step.active .icon-circle {
+    border-color: #4caf50; /* Borde verde cuando está activo */
+    background-color: #4caf50; /* Fondo verde cuando está activo */
+}
+
+.step.highlight img {
+    filter: grayscale(0%);
+}
+
+.step.highlight p {
+    color: green;
+    font-weight: bold;
+}
+
+.connector {
+    flex: 1;
+    height: 4px;
+    background-color: #e0e0e0;
+    margin: 0 -4px;
+    transition: background-color 0.3s ease-in-out;
+}
+
+.connector.active {
+    background-color: #4caf50;
+}
+
+.highlight {
+    border: 2px solid green; /* Ajusta el grosor y color del borde según tu diseño */
+    padding: 5px; /* Ajusta el padding para que se ajuste a tu diseño */
+    border-radius: 50%; /* Hace que el borde sea circular */
+}

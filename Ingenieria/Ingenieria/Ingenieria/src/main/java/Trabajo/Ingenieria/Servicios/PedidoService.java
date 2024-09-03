@@ -31,15 +31,10 @@ public class PedidoService {
         return pedidoRepository.findById(Id); 
     }
 
-    public Pedido actualizarEstadoPedido(Long idPedido, String nuevoEstado) {
-        Optional<Pedido> optionalPedido = pedidoRepository.findById(idPedido);
-        if (optionalPedido.isPresent()) {
-            Pedido pedido = optionalPedido.get();
-            pedido.setEstado(nuevoEstado);
-            return pedidoRepository.guardarPedido(pedido);
-        } else {
-            throw new RuntimeException("Pedido no encontrado con ID: " + idPedido);
-        }
+    public void actualizarEstadoPedido(Long idPedido, String nuevoEstado) {
+        Pedido pedido = pedidoRepository.findById(idPedido)
+            .orElseThrow(() -> new RuntimeException("Pedido no encontrado"));
+        pedido.setEstado(nuevoEstado);
+        pedidoRepository.guardarPedido(pedido);
     }
-    
 }
