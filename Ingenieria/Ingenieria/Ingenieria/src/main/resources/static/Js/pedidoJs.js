@@ -136,7 +136,7 @@ document.addEventListener('DOMContentLoaded', () => {
                             const stock = product.stockItem || 0;
                             const price = product.precioItem || 0;
 
-                            stockSpan.textContent = `Stock disponible: ${stock}`;
+                            stockSpan.textContent = `Stock disponible: ${stock} Precio individual: ${price}`;
                             quantityInput.setAttribute('max', stock);
                             priceInput.value = price;
                             console.log(price);
