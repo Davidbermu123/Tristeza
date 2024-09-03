@@ -21,7 +21,7 @@ function generatePassword() {
     const uppercase = "ABCDEFGHIJKLMNOPQRSTUVWXYZ";
     const numbers = "0123456789";
     const specialChars = "!@#$%^&*()_+~*'¿¡|}{[]:;?><,./-=";
-    
+
     let password = "";
 
     // Garantizar al menos un carácter de cada tipo
@@ -59,7 +59,11 @@ function saveUsuario() {
     let contrasena = $("#usuariocontrasena").val();
 
     if (name === '' || lastname === '' || alias === '' || dir === '' || cel === '' || barrio === '' || contrasena === '') {
-        alert('Por favor, complete todos los campos.');
+        Swal.fire({
+            icon: 'warning',
+            title: 'Campos incompletos',
+            text: 'Por favor, complete todos los campos.',
+        });
         return; // Detener la ejecución si algún campo está vacío
     }
 
@@ -81,13 +85,40 @@ function saveUsuario() {
         data: JSON.stringify(data),
         success: function(response) {
             localStorage.setItem('token', response.token);
-            window.location.href = "/Vistas/inicioVista.html";
+            Swal.fire({
+                icon: 'success',
+                title: 'Registro exitoso',
+                text: 'Usuario registrado correctamente.',
+                timer: 2000,
+                showConfirmButton: false
+            }).then(() => {
+                window.location.href = "/Vistas/inicioVista.html";
+            });
         },
         error: function(xhr, status, error) {
-            alert('Error en la solicitud: ' + xhr.responseText);
-            window.location.href = "/Vistas/registroVista.html";
+            let errorMessage = 'Ocurrió un error inesperado. Inténtelo de nuevo.';
+    
+            // Verificar si el error es por alias ya en uso
+            if (xhr.status === 400 && xhr.responseText === 'alias ya en uso') {
+                errorMessage = 'El alias ya está en uso. Por favor, elija otro.';
+            } 
+            // Verificar si el error es por contraseñas no válidas
+            else if (xhr.status === 400 && xhr.responseText === 'contraseña inválida') {
+                errorMessage = 'La contraseña no cumple con los requisitos. Debe tener al menos 8 caracteres, incluir una letra mayúscula, un número y un carácter especial.';
+            }
+    
+            Swal.fire({
+                icon: 'error',
+                title: 'Error en la solicitud',
+                text: errorMessage,
+                showConfirmButton: true
+            }).then(() => {
+                window.location.href = "/Vistas/registroVista.html";
+            });
         }
     });
+    
+    
 }
 
 // Función para regresar a la página principal

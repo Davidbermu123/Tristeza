@@ -30,7 +30,14 @@ public class authControlador {
     }  
     @ExceptionHandler(IllegalArgumentException.class)
     @ResponseStatus(HttpStatus.BAD_REQUEST)
-    public ResponseEntity<String> handleInvalidPasswordException(IllegalArgumentException ex) {
-        return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(ex.getMessage());
+    public ResponseEntity<String> handleInvalidRequestException(IllegalArgumentException ex) {
+        String message = ex.getMessage();
+        if (message.contains("alias ya está en uso")) {
+            return ResponseEntity.status(HttpStatus.BAD_REQUEST).body("alias ya en uso");
+        } else if (message.contains("contraseña")) {
+            return ResponseEntity.status(HttpStatus.BAD_REQUEST).body("contraseña inválida");
+        } else {
+            return ResponseEntity.status(HttpStatus.BAD_REQUEST).body("Ocurrió un error inesperado");
+        }
     }
 }

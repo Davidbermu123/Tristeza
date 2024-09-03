@@ -49,7 +49,9 @@ public class authServicio {
             throw new IllegalArgumentException("La contraseña no cumple con los criterios de seguridad: " +
                 "Debe tener al menos 8 caracteres, incluir una letra mayúscula, un número y un carácter especial.");
         }
-
+        if (userRepository.existsByUsername(request.getUsername())) {
+            throw new IllegalArgumentException("El alias ya está en uso. Por favor, elija otro.");
+        }
         // Crear y guardar el usuario
         usuario user = usuario.builder()
             .nombre(request.getNombre())

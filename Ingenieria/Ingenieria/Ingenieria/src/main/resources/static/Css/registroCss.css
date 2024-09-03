@@ -89,3 +89,6 @@ button.btn-secondary {
 button.btn-primary:hover, button.btn-secondary:hover {
     opacity: 0.9;
 }
+button.btn-primary:hover {
+    background-color: #d14a6b ;
+}
