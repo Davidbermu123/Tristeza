@@ -1,0 +1,90 @@
+/* Contenedor del formulario */
+.container {
+    margin-top: 45px;
+    padding: 20px;
+    background-color: #333; /* Fondo oscuro para el formulario */
+    border-radius: 10px;
+}
+
+/* Estilos del título */
+h2 {
+    color: #e75e8d; /* Color rosado para el título */
+    text-align: center;
+    margin-bottom: 30px;
+    font-size: 32px;
+}
+
+/* Estilos de los campos de entrada */
+input[type="text"], input[type="password"] {
+    width: 100%;
+    padding: 15px; /* Ajuste de padding para mayor espacio */
+    margin-bottom: 20px; /* Aumentar el espacio entre los campos */
+    border: 1px solid #555;
+    border-radius: 8px; /* Bordes más suaves */
+    font-size: 16px; /* Texto más grande */
+}
+
+/* Contenedor de la contraseña y botones */
+.password-container {
+    position: relative;
+    width: 100%;
+}
+
+.password-container input {
+    padding-right: 60px; /* Espacio suficiente para los botones */
+}
+
+/* Estilos para los botones dentro del campo de contraseña */
+.password-container button {
+    position: absolute;
+    top: 50%;
+    transform: translateY(-50%);
+    background: none;
+    border: none;
+    outline: none;
+    cursor: pointer;
+    padding: 0;
+    color: #999999;
+    font-size: 18px;
+}
+
+.password-container #togglePassword {
+    right: 30px;
+}
+
+/* Estilos generales de los botones */
+button.btn-primary {
+    background-color: #e75e8d;
+    color: #fff;
+    padding: 12px 20px;
+    border-radius: 5px;
+    font-size: 16px;
+}
+
+button.btn-secondary {
+    background-color: #6c757d;
+    color: #fff;
+    padding: 12px 20px;
+    border-radius: 5px;
+    font-size: 16px;
+}
+
+/* Estilo del botón de inicio de sesión */
+.header-area .main-nav .nav li:last-child a {
+    background-color: #e75e8d;
+    padding: 8px 20px;
+    border-radius: 23px;
+    color: #ffffff;
+    font-size: 14px;
+    text-transform: uppercase;
+    text-align: center;
+    margin-left: 20px; /* Espacio entre el botón y el logo */
+}
+
+/* Hover en los botones */
+button.btn-primary:hover, button.btn-secondary:hover {
+    opacity: 0.9;
+}
+button.btn-primary:hover {
+    background-color: #d14a6b ;
+}
