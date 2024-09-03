@@ -14,7 +14,6 @@ function verificarTokenYRedireccionarALogin() {
 
         let tokenPayload = JSON.parse(atob(tokenParts[1]));
         let username = tokenPayload.sub;
-        console.log(username);
 
         // Guardar el username en una variable global para usarla más adelante
         window.loggedInUsername = username;
@@ -40,6 +39,8 @@ function changeStatus(element) {
     window.location.href = 'rastreoventaCliente.html';
 }
 
+
+
 function generarFactura(pedidoId) {
     fetch('/pedidos/pedidoId/' + pedidoId, {
         method: 'GET',
@@ -50,44 +51,59 @@ function generarFactura(pedidoId) {
     .then(response => response.json())
     .then(data => {
         if (data) {
-            let invoiceData = {
-                username: data.username,
-                nombreProducto: data.nombreProducto,
-                cantidadPedido: data.cantidadPedido,
-                estado: data.estado,
-                precioFinal: data.precioFinal
-            };
+            // Obtener los datos del usuario y pasar una función de callback
+            buscarUsuarioPorAlias(data.username, usuarioData => {
 
-            return fetch('http://127.0.0.1:5000/Venta', {
-                method: 'POST',
-                headers: {
-                    'Content-Type': 'application/json'
-                },
-                body: JSON.stringify(invoiceData)
+                // Preparar los datos para la factura
+                let invoiceData = {
+                    username: usuarioData.username,  // Datos del usuario
+                    nombre: usuarioData.nombre,
+                    apellido: usuarioData.apellido,
+                    direccion: usuarioData.direccion,
+                    telefono: usuarioData.telefono,
+                    ciudad: usuarioData.ciudad,
+                    nombreProducto: data.nombreProducto,
+                    cantidadPedido: data.cantidadPedido,
+                    estado: data.estado,
+                    precioFinal: data.precioFinal
+                };
+
+                // Generar la factura
+                fetch('http://127.0.0.1:5000/Venta', {
+                    method: 'POST',
+                    headers: {
+                        'Content-Type': 'application/json'
+                    },
+                    body: JSON.stringify(invoiceData)
+                })
+                .then(response => {
+                    if (!response.ok) {
+                        throw new Error("Error en la solicitud.");
+                    }
+                    return response.blob();
+                })
+                .then(blob => {
+                    if (blob.type === 'application/pdf' && blob.size > 0) {
+                        const url = window.URL.createObjectURL(blob);
+                        const a = document.createElement('a');
+                        a.href = url;
+                        a.download = 'Factura.pdf';
+                        document.body.appendChild(a);
+                        a.click();
+                        document.body.removeChild(a);
+                        window.URL.revokeObjectURL(url);
+                    } else {
+                        console.error('El blob no es un PDF válido o está vacío.');
+                        alert("Error al generar la factura.");
+                    }
+                })
+                .catch(error => {
+                    console.error('Error details:', error);
+                    alert("Error al generar la factura.");
+                });
             });
         } else {
             throw new Error("Pedido no encontrado.");
-        }
-    })
-    .then(response => {
-        if (!response.ok) {
-            throw new Error("Error en la solicitud.");
-        }
-        return response.blob();
-    })
-    .then(blob => {
-        if (blob.type === 'application/pdf' && blob.size > 0) {
-            const url = window.URL.createObjectURL(blob);
-            const a = document.createElement('a');
-            a.href = url;
-            a.download = 'Factura.pdf';
-            document.body.appendChild(a);
-            a.click();
-            document.body.removeChild(a);
-            window.URL.revokeObjectURL(url);
-        } else {
-            console.error('El blob no es un PDF válido o está vacío.');
-            alert("Error al generar la factura.");
         }
     })
     .catch(error => {
@@ -102,6 +118,9 @@ function llenarTabla(pedidos) {
     tbody.empty(); // Limpia cualquier contenido existente en la tabla
 
     pedidos.forEach(function(pedido) {
+        buscarUsuarioPorAlias(pedido.username, function(response) {
+            console.log('Usuario encontrado:', response.direccion);
+        });
         var fila = '<tr>' +
             '<td>' + pedido.estado + '</td>' +
             '<td>' + pedido.idPedido + '</td>' +
@@ -129,6 +148,26 @@ $(document).ready(function(){
         }
     });
 });
+
+function buscarUsuarioPorAlias(nombre, callback) {
+    $.ajax({
+        url: '/controladorCliente/findbyalias', // URL del endpoint
+        method: 'GET',
+        headers: {
+            'Authorization': 'Bearer ' + token// Opcional: Si necesitas un token para la autenticación
+        },
+        data: {
+            username: nombre // Parámetro a enviar en la solicitud
+        },
+        success: function(response) {
+            callback(response);
+        },
+        error: function(xhr, status, error) {
+            console.error('Error al buscar el usuario:', error);
+            alert('Error al buscar el usuario.');
+        }
+    });
+}
 
 function logout() {
     // Mostrar un mensaje de confirmación al usuario
