@@ -10,43 +10,48 @@ window.onload = function(){
 }
 
 function verificarTokenYRedireccionarALogin() {
+    let token = localStorage.getItem('token');
 
-    // Verificar si el token está presente
     if (token === null) {
-        // Si el token no está presente, redirigir al usuario al inicio de sesión
         window.location.href = '/Vistas/inicioVista.html';
     } else {
         var tokenParts = token.split('.');
         var tokenPayload = JSON.parse(atob(tokenParts[1]));
-        var username=tokenPayload.sub;
-        console.log(username);
+        var username = tokenPayload.sub;
+        console.log("Usuario autenticado:", username);
     }
 }
 
-function traerUsuario(){
-    // Hacer una solicitud al backend para obtener el nombre de usuario
-    fetch('/controladorCliente/obtenerPerfil', {
+function traerUsuario() {
+    let token = localStorage.getItem('token');
+    var tokenParts = token.split('.');
+    var tokenPayload = JSON.parse(atob(tokenParts[1]));
+    var username = tokenPayload.sub;
+
+    fetch(`/controladorCliente/obtenerPerfil?alias=${encodeURIComponent(username)}`, {
         method: 'GET',
         headers: {
             'Authorization': 'Bearer ' + token
-        },
-        data: { alias: username},
+        }
     })
     .then(response => {
         if (!response.ok) {
             window.location.href = '/Vistas/inicioVista.html';
             throw new Error('No autorizado');
         }
-        return response.text();
+        return response.json();
     })
-    .then(username => {
-        // Mostrar el nombre de usuario en el HTML
-        console.log(username)
-        usernameDisplay.textContent = username;
+    .then(data => {
+        // Asignar los valores obtenidos a los campos del formulario
+        document.getElementById('username').textContent = data.nombreUsuario; // Si tienes un campo para mostrar el nombre de usuario
+        document.getElementById('nombre').value = data.nombre;
+        document.getElementById('apellido').value = data.apellido;
+        document.getElementById('ciudad').value = data.ciudad;
+        document.getElementById('direccion').value = data.direccion;
+        document.getElementById('telefono').value = data.telefono;
     })
     .catch(error => {
-        console.error('Error:', error);
-        // Opcional: Mostrar un mensaje de error o realizar otras acciones
+        console.error('Error al obtener el perfil:', error);
     });
 }
 
@@ -54,10 +59,15 @@ function traerUsuario(){
 
 
 // Manejador de envío del formulario de actualización
+// Manejador de envío del formulario de actualización
 document.getElementById('updateProfileForm').addEventListener('submit', function(event) {
     event.preventDefault();
+    
     const token = localStorage.getItem('token');
-    const username = document.getElementById('usernameSelect').value;
+    const tokenParts = token.split('.');
+    const tokenPayload = JSON.parse(atob(tokenParts[1]));
+    const username = tokenPayload.sub;  // Se obtiene el username directamente desde el token
+
     const nombre = document.getElementById('nombre').value;
     const apellido = document.getElementById('apellido').value;
     const direccion = document.getElementById('direccion').value;
@@ -65,26 +75,23 @@ document.getElementById('updateProfileForm').addEventListener('submit', function
     const ciudad = document.getElementById('ciudad').value;
     const rol = document.getElementById('rol').value;
 
-    if (username) {
-        fetch(`/controladorCliente/updateUsuario?username=${encodeURIComponent(username)}&nombre=${encodeURIComponent(nombre)}&apellido=${encodeURIComponent(apellido)}&ciudad=${encodeURIComponent(ciudad)}&direccion=${encodeURIComponent(direccion)}&telefono=${encodeURIComponent(telefono)}&rol=${encodeURIComponent(rol)}`, {
-            method: 'PUT',
-            headers: {
-                'Content-Type': 'application/json',
-            },
-        })
-        .then(response => {
-            if (response.ok) {
-                alert('Perfil actualizado exitosamente.');
-                window.location.reload();  // Recarga la página para mostrar los datos actualizados
-            } else {
-                alert('Error al actualizar el perfil.');
-            }
-        })
-        .catch(error => {
-            console.error('Error:', error);
+    // Realizar la solicitud PUT para actualizar el perfil del usuario
+    fetch(`/controladorCliente/updateUsuario?username=${encodeURIComponent(username)}&nombre=${encodeURIComponent(nombre)}&apellido=${encodeURIComponent(apellido)}&ciudad=${encodeURIComponent(ciudad)}&direccion=${encodeURIComponent(direccion)}&telefono=${encodeURIComponent(telefono)}&rol=${encodeURIComponent(rol)}`, {
+        method: 'PUT',
+        headers: {
+            'Content-Type': 'application/json',
+        },
+    })
+    .then(response => {
+        if (response.ok) {
+            alert('Perfil actualizado exitosamente.');
+            window.location.reload();  // Recarga la página para mostrar los datos actualizados
+        } else {
             alert('Error al actualizar el perfil.');
-        });
-    } else {
-        alert('Debe seleccionar un alias.');
-    }
+        }
+    })
+    .catch(error => {
+        console.error('Error:', error);
+        alert('Error al actualizar el perfil.');
+    });
 });
