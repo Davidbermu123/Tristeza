@@ -26,12 +26,14 @@ $(document).ready(function() {
         var imagen = $('#imagen_item').val();
         var stock = $('#stock_item').val();
         var precio = $('#precio_item').val();
+        var descripcion = $('#descripcion_item').val();
 
         var data = {
             imagenItem: imagen,
             nombreItem: nombre,
             precioItem: precio,
-            stockItem: stock
+            stockItem: stock,
+            descripcionItem: descripcion
         };
 
         // Realizamos la petición AJAX

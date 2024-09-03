@@ -118,6 +118,7 @@ function mostrar_todos(){
                 var lista = $('<ul></ul>');
                 lista.append('<li><i class="fa-solid fa-money-bill-wave" style="color: #1cd08b;"></i> ' + fichaExistente.precioItem + '</li>');
                 lista.append('<li><i class="fa-solid fa-box-open"></i> ' + fichaExistente.stockItem + '</li>');
+                lista.append('<li><i class="fa-solid fa-file-alt"></i> ' + fichaExistente.descripcionItem + '</li>');
 
                 // Añadimos los elementos a su contenedor
                 itemInner.append(imagen);
