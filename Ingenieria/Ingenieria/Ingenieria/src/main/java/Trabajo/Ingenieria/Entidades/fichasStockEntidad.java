@@ -15,7 +15,8 @@ public class fichasStockEntidad {
     private String imagenItem;
     private Integer stockItem;
     private Float precioItem;
-
+    private String descripcionItem;
+    
     public Long getIdItem() {
         return idItem;
     }
@@ -45,6 +46,12 @@ public class fichasStockEntidad {
     }
     public void setPrecioItem(Float precioItem) {
         this.precioItem = precioItem;
+    }
+    public String getDescripcionItem() {
+        return descripcionItem;
+    }
+    public void setDescripcionItem(String descripcionItem) {
+        this.descripcionItem = descripcionItem;
     }
     
 }

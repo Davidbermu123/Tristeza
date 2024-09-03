@@ -6,6 +6,7 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
 import Trabajo.Ingenieria.Entidades.fichasStockEntidad;
@@ -22,6 +23,10 @@ public class fichasStockControlador {
     @GetMapping("/getFichasStock")
     public List<fichasStockEntidad> getAllFichasStockEntidad(){
         return fichasStockServicio.getAllfichasStockEntidad();
+    }
+     @GetMapping("/getFichasStockConLimite")
+    public List<fichasStockEntidad> getFichasStockConLimite(@RequestParam int limit) {
+        return fichasStockServicio.getFichasStockConLimite(limit);
     }
 
     @PostMapping("/guardarFichasStock")

@@ -1,4 +1,5 @@
 package Trabajo.Ingenieria.Repositorios;
+import java.util.Collection;
 import java.util.List;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
@@ -20,5 +21,10 @@ public class fichasStockRepositorio {
 
     public fichasStockEntidad findByIdItem(Long id){
         return fichasStockCrudRepositorio.findByIdItem(id);
+    }
+
+    public Collection<fichasStockEntidad> findAll() {
+        // TODO Auto-generated method stub
+        throw new UnsupportedOperationException("Unimplemented method 'findAll'");
     }
 }

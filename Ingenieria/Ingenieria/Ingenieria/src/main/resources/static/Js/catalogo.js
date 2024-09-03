@@ -20,48 +20,48 @@ document.addEventListener('DOMContentLoaded', function () {
     mostrar_todos();
 });
 
-function mostrar_todos() {
+function mostrar_todos(){
     $.ajax({
         url: '/requestFichasStock/getFichasStock',
         type: 'GET',
         headers: {
             'Authorization': 'Bearer ' + token
         },
-        success: function (data) {
-            $("#featuredFichas").empty();
+        success: function(data) {
+            // Limpiamos el contenedor principal antes de añadir nuevos elementos
+            $("#imagenFicha").empty();
 
-            $.each(data, function (index, fichaExistente) {
-                var item = $('<div class="item"></div>');
-
+            $.each(data, function(index, fichaExistente) {
+                // Creamos la estructura completa para cada ficha
+                var item = $('<div class="col-lg-3 col-sm-6"></div>');
+                
+                var itemInner = $('<div class="item"></div>');
+                
                 var imagen = $('<img>');
                 imagen.attr("src", fichaExistente.imagenItem);  // URL de la imagen
                 imagen.attr("alt", fichaExistente.nombreItem);  // Texto alternativo
 
-                var titulo = $('<h4></h4>').text(fichaExistente.nombreItem);
+                var titulo = $('<h4></h4>').html(fichaExistente.nombreItem +  '</span>');
 
                 var lista = $('<ul></ul>');
                 lista.append('<li><i class="fa-solid fa-money-bill-wave" style="color: #1cd08b;"></i> ' + fichaExistente.precioItem + '</li>');
                 lista.append('<li><i class="fa-solid fa-box-open"></i> ' + fichaExistente.stockItem + '</li>');
+                lista.append('<li><i class="fa-solid fa-file-alt"></i> ' + fichaExistente.descripcionItem + '</li>');
 
-                item.append(imagen);
-                item.append(titulo);
-                item.append(lista);
+                // Añadimos los elementos a su contenedor
+                itemInner.append(imagen);
+                itemInner.append(titulo);
+                itemInner.append(lista);
 
-                $("#featuredFichas").append(item);
+                // Añadimos la estructura completa al div 'col-lg-3 col-sm-6'
+                item.append(itemInner);
+
+                // Finalmente, añadimos este elemento al contenedor principal
+                $("#imagenFicha").append(item);
             });
 
-            // Inicializar el carousel de Owl después de agregar los elementos
-            $('.owl-features').owlCarousel({
-                loop: true,
-                margin: 10,
-                nav: true,
-                items: 1, // Ajusta el número de elementos visibles según tu diseño
-                autoplay: true,
-                autoplayTimeout: 3000
-            });
-        },
-        error: function (xhr, status, error) {
-            console.error('Error al obtener los items:', error);
+        },error: function(xhr, status, error) {
+            console.error('Error al verificar la existencia:', error);
         }
     });
 }
@@ -77,6 +77,7 @@ $(document).ready(function() {
                         <h3>${item.nombreItem}</h3>
                         <p>Stock: ${item.stockItem}</p>
                         <p>Precio: $${item.precioItem.toFixed(2)}</p>
+                        <p>Descripción: ${item.descripcionItem}</p>
                     </div>
                 `;
                 $("#productosContainer").append(productoHtml);
@@ -87,4 +88,3 @@ $(document).ready(function() {
         }
     });
 });
-

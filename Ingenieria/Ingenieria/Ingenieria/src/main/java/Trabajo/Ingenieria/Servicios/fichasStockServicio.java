@@ -1,5 +1,7 @@
 package Trabajo.Ingenieria.Servicios;
 import java.util.List;
+import java.util.stream.Collectors;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import Trabajo.Ingenieria.Entidades.fichasStockEntidad;
@@ -21,5 +23,9 @@ public class fichasStockServicio {
 
     public fichasStockEntidad findByIdItem(Long id){
         return fichasStockRepositorio.findByIdItem(id);
+    }
+    
+     public List<fichasStockEntidad> getFichasStockConLimite(int limit) {
+        return fichasStockRepositorio.findAll().stream().limit(limit).collect(Collectors.toList());
     }
 }
