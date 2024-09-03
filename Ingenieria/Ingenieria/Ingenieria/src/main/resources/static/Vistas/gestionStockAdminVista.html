@@ -84,108 +84,67 @@ https://templatemo.com/tm-579-cyborg-gaming
             <div class="row">
               <div class="col-lg-7">
                 <div class="header-text">
-                  <h6>Bienvenido a la gestion de inventario</h6>
-                  <h4><em>Monitorea</em> todas las fichas en stock</h4>
+                  <h6>Bienvenido a la gestion de las piezas del inventario</h6>
+                  <h4><em>Añade o elimina</em> todas las fichas en stock</h4>
                 </div>
               </div>
             </div>
           </div>
           <!-- ***** Banner End ***** -->
 
-          <!-- ***** Filtrado de productos ***** -->
+          <!-- ***** Operaciones en productos ***** -->
           <div class="gaming-library">
             <div class="col-lg-12">
               <div class="heading-section">
-                <h4><em>Personaliza tu</em> Busqueda</h4>
-              </div>
-              <div class="item">
-                <ul>
-                  <li><h4>Filtrar por:</h4><span>Precios</span></li>
-                  <li><label for="precio">Filtrar por precio:</label>
-                    <select id="precio" onchange="filterItems()">
-                        <option value="todos">Todos</option>
-                        <option value="5">Menos de $5</option>
-                        <option value="10">Menos de $10</option>
-                        <option value="20">Menos de $20</option>
-                    </select>
-                  </li>
-                  <li><h4>  </h4></li>
-                  <li><h4>Filtrar por:</h4><span>Stock</span></li>
-                  <li><label for="stock">Filtrar por stock:</label>
-                    <select id="stock" onchange="filterItems()">
-                        <option value="todos">Todos</option>
-                        <option value="500">Menos de 500</option>
-                        <option value="100">Menos de 100</option>
-                        <option value="100">Menos de 50</option>
-                    </select>
-                  </li>
-                </ul>
-              </div>
-            </div>
-            <div class="col-lg-12">
-            </div>
-          </div>
-          <!-- ***** Filtrado de productos End ***** -->
-
-          <!-- ***** Muestreo productos ***** -->
-          <div class="most-popular">
-            <div class="row">
-              <div class="col-lg-12">
-                <div class="heading-section">
-                  <h4><em>Productos</em> Seleccionados</h4>
-                </div>
-                <div class="row">
-
-                  <div id="imagenFicha" class="row"></div>
-
-                  <div class="col-lg-12">
-                  </div>
-                </div>
-              </div>
-            </div>
-          </div>
-          <!-- ***** Muestreo productos End ***** -->
-
-          <!-- ***** Busqueda especifica productos ***** -->
-          <div class="gaming-library">
-            <div class="col-lg-12">
-              <div class="heading-section">
-                <h4><em>Busqueda </em> Especifica</h4>
+                <h4><em>Realiza la</em> Operacion</h4>
               </div>
               <div style="text-align: center;" class="item">
-                <form id="buscar_form">
+                <form id="agregar_form">
                     <ul>
+                        <h4><em>Agregar</h4>
                         <ul>
-                            <li><label for="nombre_item"><h4>Id del</h4><span>Item</span></label></li>
+                            <li><label for="nombre_item"><h4>Nombre del</h4><span>Item</span></label></li>
                             <input type="text" id="nombre_item" name="nombre_item" required>
                         </ul>
                         <ul>
-                            <li><h4>Realizar</h4><span>Busqueda</span></li>
-                            <button type="submit">Buscar</button>
+                            <li><label for="imagen_item"><h4>Dir Imagen del</h4><span>Item</span></label></li>
+                            <input type="text" id="imagen_item" name="imagen_item" required>
+                        </ul>
+                        <ul>
+                            <li><label for="stock_item"><h4>Cantidad de</h4><span>Stock</span></label></li>
+                            <input type="number" id="stock_item" name="stock_item" required>
+                        </ul>
+                        <ul>
+                            <li><label for="precio_item"><h4>Precio del</h4><span>item</span></label></li>
+                            <input type="number" id="precio_item" name="precio_item" step="0.01" min="0" required>
+                        </ul>
+                        <ul>
+                            <li><h4>Finalizar el</h4><span>Ingreso</span></li>
+                            <button type="submit">Añadir</button>
                         </ul>
                     </ul>
                 </form>
               </div>
             </div>
-          </div>
-                    <div class="most-popular">
-                      <div class="row">
-                        <div class="col-lg-12">
-                          <div class="heading-section">
-                            <h4><em>Producto</em> Encontrado</h4>
-                          </div>
-                          <div class="row">
-          
-                            <div id="imagenFichaEspecifica" class="row"></div>
-          
-                            <div class="col-lg-12">
-                            </div>
-                          </div>
-                        </div>
-                      </div>
+            <div style="text-align: center;" class="col-lg-12">
+                <form id="eliminar_form">
+                    <ul>
+                        <h4><em>Eliminar</h4>
+                    </ul>
+                    <div class="item">
+                        <ul>
+                            <li><label for="nombre"><h4>Id del</h4><span>Elemento</span></label></li>
+                            <input type="number" id="id_borrar" name="id_borrar" required>
+                        </ul>
+                        <ul>
+                            <li><h4>Finalizar el</h4><span>Borrado</span></li>
+                            <button type="submit">Eliminar</button>
+                        </ul>
                     </div>
-
-          <!-- ***** Busqueda especifica productos End ***** -->
+                </form>
+            </div>
+          </div>
+          <!-- ***** Operaciones en productos End ***** -->
 
         </div>
       </div>
@@ -208,7 +167,7 @@ https://templatemo.com/tm-579-cyborg-gaming
   <!-- Scripts -->
 
   <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.7.1/jquery.min.js"></script>
-  <script src="/Js\fichasStockJs.js"></script>
+  <script src="../Js/gestionStockAdminJS.js"></script>
 
   <!-- Bootstrap core JavaScript -->
   <script src="../vendor/jquery/jquery.min.js"></script>

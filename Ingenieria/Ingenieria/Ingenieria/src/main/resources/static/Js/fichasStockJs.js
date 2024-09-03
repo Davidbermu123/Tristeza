@@ -54,7 +54,7 @@ function filterItems() {
                         mostrar = false;
                     }
 
-                    if (params.stock && fichaExistente.stockItem < params.stock) {
+                    if (params.stock && fichaExistente.stockItem >= params.stock) {
                         mostrar = false;
                     }
 
@@ -136,3 +136,57 @@ function mostrar_todos(){
         }
     });
 }
+
+$(document).ready(function() {
+    // Capturamos el evento de envío del formulario
+    $('#buscar_form').on('submit', function(e) {
+        e.preventDefault(); // Evita que el formulario se envíe de la forma tradicional
+
+        // Obtenemos el ID del elemento a buscar
+        var id = $('#nombre_item').val();
+
+        // Realizamos la petición AJAX para buscar el elemento
+        $.ajax({
+            url: '/requestFichasStock/buscarFichasStock/' + id, // Cambia esta URL al endpoint de tu servidor
+            type: 'GET',
+            headers: {
+                'Authorization': 'Bearer ' + token // Agrega el token de autenticación si es necesario
+            },
+            success: function(response) {
+                // Limpiamos el contenedor principal antes de añadir nuevos elementos
+                $("#imagenFichaEspecifica").empty();
+
+                // Suponiendo que response es un objeto con los datos del ítem
+                var item = $('<div class="col-lg-3 col-sm-6"></div>');
+
+                var itemInner = $('<div class="item"></div>');
+
+                var imagen = $('<img>');
+                imagen.attr("src", response.imagenItem);  // URL de la imagen
+                imagen.attr("alt", response.nombreItem);  // Texto alternativo
+
+                var titulo = $('<h4></h4>').html(response.nombreItem);
+
+                var lista = $('<ul></ul>');
+                lista.append('<li><i class="fa-solid fa-money-bill-wave" style="color: #1cd08b;"></i> ' + response.precioItem + '</li>');
+                lista.append('<li><i class="fa-solid fa-box-open"></i> ' + response.stockItem + '</li>');
+
+                // Añadimos los elementos a su contenedor
+                itemInner.append(imagen);
+                itemInner.append(titulo);
+                itemInner.append(lista);
+
+                // Añadimos la estructura completa al div 'col-lg-3 col-sm-6'
+                item.append(itemInner);
+
+                // Finalmente, añadimos este elemento al contenedor principal
+                $("#imagenFichaEspecifica").append(item);
+            },
+            error: function(xhr, status, error) {
+                // Maneja los errores
+                console.error('Error:', error);
+                $('#imagenFichaEspecifica').html('<p>Elemento no encontrado o hubo un problema con la búsqueda.</p>');
+            }
+        });
+    });
+});

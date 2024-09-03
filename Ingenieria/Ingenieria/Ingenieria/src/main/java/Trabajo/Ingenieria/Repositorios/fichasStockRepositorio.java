@@ -15,6 +15,10 @@ public class fichasStockRepositorio {
     private fichasStockCrudRepositorio fichasStockCrudRepositorio;
 
 
+    public void deleteById(Long id) {
+        fichasStockCrudRepositorio.deleteById(id);
+    }
+
     public List<fichasStockEntidad> getAllfichasStockEntidad(){
         return ((List<fichasStockEntidad>)fichasStockCrudRepositorio.findAll());
     }

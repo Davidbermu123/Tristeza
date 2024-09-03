@@ -17,12 +17,16 @@ public class fichasStockServicio {
         return fichasStockRepositorio.getAllfichasStockEntidad();
     }
 
+    public void deleteById(Long id) {
+        fichasStockRepositorio.deleteById(id);
+    }
+
     public fichasStockEntidad save (fichasStockEntidad e){
         return fichasStockRepositorio.guardarElementoFichasStock(e);
     }
 
     public fichasStockEntidad findByIdItem(Long id){
-        return fichasStockRepositorio.findByIdItem(id);
+        return fichasStockRepositorio.findByIdItem(id); // Asegúrate de que este método esté disponible
     }
 
     public List<fichasStockEntidad> obtenerItemsConStock() {
